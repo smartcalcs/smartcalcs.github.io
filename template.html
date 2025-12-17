@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- CHANGE TITLE FOR EACH CALCULATOR -->
+  <title>Calculator Title | SmartCalcs</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CHANGE DESCRIPTION FOR EACH CALCULATOR -->
+  <meta name="description" content="Short description of what this calculator does. Keep under 160 characters.">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 22px;
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 12px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1e4fd6;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    ul {
+      font-size: 14px;
+      padding-left: 18px;
+    }
+
+    .note {
+      margin-top: 25px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .related a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .related a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- CHANGE H1 FOR EACH CALCULATOR -->
+  <h1>Calculator Heading</h1>
+
+  <!-- CALCULATOR INPUTS START -->
+  <!-- Replace inputs based on calculator -->
+  <label>Input Field 1</label>
+  <input type="number" placeholder="Enter value">
+
+  <label>Input Field 2</label>
+  <input type="number" placeholder="Enter value">
+
+  <button onclick="calculate()">Calculate</button>
+  <!-- CALCULATOR INPUTS END -->
+
+  <!-- RESULT -->
+  <div class="result" id="result"></div>
+
+  <!-- EXPLANATION -->
+  <h2>How this calculator works</h2>
+  <p>
+    Explain in simple terms what this calculator does and how the values are calculated.
+    Keep it short and human-readable.
+  </p>
+
+  <!-- EXAMPLE -->
+  <h2>Example</h2>
+  <p>
+    Provide one realistic example with numbers users understand.
+  </p>
+
+  <!-- RELATED CALCULATORS -->
+  <h2>Related Calculators</h2>
+  <ul class="related">
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="fd-calculator.html">FD Calculator</a></li>
+  </ul>
+
+  <!-- NOTE (ONLY ONE PER PAGE) -->
+  <p class="note">
+    <strong>Note:</strong> This calculator provides estimated results based on the inputs
+    provided. Actual results may vary.
+  </p>
+
+</div>
+
+<!-- CALCULATOR LOGIC -->
+<script>
+function calculate() {
+  // Replace this logic per calculator
+  document.getElementById("result").innerHTML = "Result will appear here.";
+}
+</script>
+
+</body>
+</html>
