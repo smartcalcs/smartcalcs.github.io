@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Percentage Calculator – Easy Percentage Increase & Decrease | SmartCalcs</title>
+  <title>Percentage Calculator – Increase, Decrease & Percentage of a Number | SmartCalcs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Free percentage calculator to find percentage increase, decrease, and percentage of a number. Simple, fast, and accurate.">
+  <meta name="description" content="Free percentage calculator to find percentage of a number, percentage increase, decrease, and what percent one number is of another.">
 
   <style>
     body {
@@ -16,25 +16,30 @@
     }
 
     .container {
-      max-width: 520px;
+      max-width: 560px;
       margin: auto;
       background: #ffffff;
-      padding: 20px;
+      padding: 22px;
       border-radius: 8px;
     }
 
     h1 {
       font-size: 22px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
     }
 
     label {
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 12px;
       display: block;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -65,14 +70,9 @@
       font-weight: bold;
     }
 
-    h2 {
-      margin-top: 30px;
-      font-size: 18px;
-    }
-
     p {
-      line-height: 1.6;
       font-size: 14px;
+      line-height: 1.6;
     }
 
     .note {
@@ -85,55 +85,85 @@
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1>Percentage Calculator</h1>
+  <h1>Percentage Calculator</h1>
 
-    <label>Value</label>
-    <input type="number" id="value" placeholder="Enter value">
+  <label>Select Calculation Type</label>
+  <select id="type">
+    <option value="of">Percentage of a Number</option>
+    <option value="increase">Percentage Increase</option>
+    <option value="decrease">Percentage Decrease</option>
+    <option value="what">What Percentage?</option>
+  </select>
 
-    <label>Percentage (%)</label>
-    <input type="number" id="percentage" placeholder="Enter percentage">
+  <label>Value 1</label>
+  <input type="number" id="value1" placeholder="Enter first value">
 
-    <button onclick="calculatePercentage()">Calculate</button>
+  <label>Value 2 (%) or Total</label>
+  <input type="number" id="value2" placeholder="Enter second value">
 
-    <div class="result" id="result"></div>
+  <button onclick="calculate()">Calculate</button>
 
-    <h2>How this percentage calculator works</h2>
-    <p>
-      This calculator helps you quickly find a percentage of a number.
-      It can be used to calculate discounts, increases, decreases, marks,
-      interest, and more.
-    </p>
+  <div class="result" id="result"></div>
 
-    <h2>Example</h2>
-    <p>
-      If you want to find 10% of 500, enter 500 as the value and 10 as the percentage.
-      The result will be 50.
-    </p>
+  <h2>How this percentage calculator works</h2>
+  <p>
+    This calculator helps you solve common percentage problems such as
+    finding a percentage of a number, calculating percentage increase or decrease,
+    and determining what percentage one value is of another.
+  </p>
 
-    <p class="note">
-      <strong>Note:</strong> This calculator provides simple percentage calculations.
-      Results are for general understanding and educational use.
-    </p>
+  <h2>Examples</h2>
+  <p>
+    • 10% of 500 = 50<br>
+    • 500 increased by 10% = 550<br>
+    • 500 decreased by 10% = 450<br>
+    • 50 is 10% of 500
+  </p>
 
-  </div>
+  <p class="note">
+    <strong>Note:</strong> Results are calculated using standard percentage formulas
+    and are intended for educational and general use.
+  </p>
 
-  <script>
-    function calculatePercentage() {
-      let value = parseFloat(document.getElementById("value").value);
-      let percentage = parseFloat(document.getElementById("percentage").value);
+</div>
 
-      if (isNaN(value) || isNaN(percentage)) {
-        document.getElementById("result").innerHTML = "Please enter valid numbers.";
-        return;
-      }
+<script>
+function calculate() {
+  let type = document.getElementById("type").value;
+  let v1 = parseFloat(document.getElementById("value1").value);
+  let v2 = parseFloat(document.getElementById("value2").value);
+  let resultText = "";
 
-      let result = (value * percentage) / 100;
-      document.getElementById("result").innerHTML =
-        percentage + "% of " + value + " is " + result;
-    }
-  </script>
+  if (isNaN(v1) || isNaN(v2)) {
+    document.getElementById("result").innerHTML = "Please enter valid numbers.";
+    return;
+  }
+
+  if (type === "of") {
+    let result = (v1 * v2) / 100;
+    resultText = v2 + "% of " + v1 + " is " + result;
+  }
+
+  if (type === "increase") {
+    let result = v1 + (v1 * v2) / 100;
+    resultText = v1 + " increased by " + v2 + "% is " + result;
+  }
+
+  if (type === "decrease") {
+    let result = v1 - (v1 * v2) / 100;
+    resultText = v1 + " decreased by " + v2 + "% is " + result;
+  }
+
+  if (type === "what") {
+    let result = (v1 / v2) * 100;
+    resultText = v1 + " is " + result.toFixed(2) + "% of " + v2;
+  }
+
+  document.getElementById("result").innerHTML = resultText;
+}
+</script>
 
 </body>
 </html>
