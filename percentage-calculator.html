@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Percentage Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>Percentage Calculator</h1>
+
+<label>What is</label><br>
+<input type="number" id="percent"> % of
+<input type="number" id="number"><br><br>
+
+<button onclick="calc()">Calculate</button>
+
+<h2 id="result"></h2>
+
+<script>
+function calc() {
+  let p = document.getElementById("percent").value;
+  let n = document.getElementById("number").value;
+  let r = (p / 100) * n;
+  document.getElementById("result").innerHTML =
+    p + "% of " + n + " = " + r;
+}
+</script>
+
+</body>
+</html>
