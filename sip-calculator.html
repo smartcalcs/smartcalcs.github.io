@@ -9,32 +9,145 @@
         content="Calculate how much a ₹5,000 monthly SIP can grow in 10 years. See total investment, final value, and understand how compounding works in simple terms.">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #444;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0 12px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .note {
+      font-size: 14px;
+      color: gray;
+      margin-top: 15px;
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>₹5,000 SIP in 10 Years – Return Calculator & Growth Estimate</h1>
+  <div class="container">
 
-  <p>
-    This SIP calculator helps you estimate how much your monthly investment can grow over time.
-    Enter the amount you invest every month, the expected annual return, and the investment
-    duration. The calculator shows your total investment and the estimated value after
-    compounding.
-  </p>
+    <h1>₹5,000 SIP in 10 Years – Return Calculator & Growth Estimate</h1>
 
-  <label>Monthly Investment (₹)</label><br>
-  <input type="number" id="monthly" value="5000"><br><br>
+    <p>
+      This SIP calculator helps you estimate how much your monthly investment can grow over time.
+      Enter the amount you invest every month, the expected annual return, and the investment
+      duration. The calculator shows your total investment and the estimated value after
+      compounding.
+    </p>
 
-  <label>Expected Annual Return (%)</label><br>
-  <input type="number" id="rate" value="12"><br><br>
+    <label>Monthly Investment (₹)</label>
+    <input type="number" id="monthly" value="5000">
 
-  <label>Time Period (Years)</label><br>
-  <input type="number" id="years" value="10"><br><br>
+    <label>Expected Annual Return (%)</label>
+    <input type="number" id="rate" value="12">
 
-  <button onclick="calculate()">Calculate</button>
+    <label>Time Period (Years)</label>
+    <input type="number" id="years" value="10">
 
-  <h2 id="result"></h2>
+    <button onclick="calculate()">Calculate</button>
 
+    <div class="result" id="result"></div>
+
+    <p id="interpretation" style="display:none;"></p>
+
+    <p class="note">
+      Note: This calculator provides an estimate. Actual returns may vary based on market performance.
+    </p>
+
+  </div>
+
+  <script>
+    function calculate() {
+      let P = Number(document.getElementById("monthly").value);
+      let rate = Number(document.getElementById("rate").value);
+      let years = Number(document.getElementById("years").value);
+
+      if (!P || !rate || !years) {
+        document.getElementById("result").innerText = "Please enter all values.";
+        document.getElementById("interpretation").style.display = "none";
+        return;
+      }
+
+      let r = rate / 100 / 12;
+      let n = years * 12;
+
+      let futureValue = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+      let invested = P * n;
+
+      document.getElementById("result").innerText =
+        "Estimated Value after " + years + " years: ₹" +
+        Math.round(futureValue).toLocaleString();
+
+      document.getElementById("interpretation").style.display = "block";
+      document.getElementById("interpretation").innerText =
+        "If you invest ₹" + P.toLocaleString() + " every month for " + years +
+        " years, your total investment will be ₹" + invested.toLocaleString() +
+        ". Based on the selected return rate, your investment could grow to approximately ₹" +
+        Math.round(futureValue).toLocaleString() +
+        ". The extra amount is earned through compounding over time.";
+    }
+
+    window.onload = calculate;
+  </script>
+
+</body>
+</html>
   <p id="interpretation" style="display:none;"></p>
 
   <p style="font-size:14px; color:gray;">
