@@ -2,59 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Percentage Calculator – Find Percentages Easily | SmartCalcs</title>
-
-  <meta name="description"
-        content="Use this percentage calculator to find what percent one number is of another, calculate percentage increase or decrease, and find X% of a number easily.">
-
+  <title>Percentage Calculator – Easy Percentage Increase & Decrease | SmartCalcs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free percentage calculator to find percentage increase, decrease, and percentage of a number. Simple, fast, and accurate.">
 
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f4f6f8;
       margin: 0;
-      padding: 16px;
-      line-height: 1.5;
+      padding: 20px;
+      color: #333;
     }
 
     .container {
-      max-width: 600px;
+      max-width: 520px;
       margin: auto;
       background: #ffffff;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-radius: 8px;
     }
 
     h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
+      font-size: 22px;
+      margin-bottom: 15px;
     }
 
-    h2 {
-      font-size: 18px;
-      margin-top: 25px;
-    }
-
-    p {
-      color: #444;
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
     }
 
     input {
       width: 100%;
       padding: 10px;
-      margin: 6px 0 12px 0;
-      border-radius: 6px;
+      margin-top: 5px;
       border: 1px solid #ccc;
+      border-radius: 5px;
       font-size: 16px;
     }
 
     button {
       width: 100%;
+      margin-top: 15px;
       padding: 12px;
       background: #2563eb;
-      color: white;
+      color: #ffffff;
       border: none;
       border-radius: 6px;
       font-size: 16px;
@@ -62,24 +56,29 @@
     }
 
     button:hover {
-      background: #1d4ed8;
+      background: #1e4fd6;
     }
 
     .result {
-      margin-top: 10px;
+      margin-top: 20px;
+      font-size: 18px;
       font-weight: bold;
     }
 
-    hr {
-      margin: 30px 0;
-      border: none;
-      border-top: 1px solid #ddd;
+    h2 {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 14px;
     }
 
     .note {
-      font-size: 14px;
-      color: gray;
-      margin-top: 20px;
+      margin-top: 25px;
+      font-size: 13px;
+      color: #555;
     }
   </style>
 </head>
@@ -90,186 +89,49 @@
 
     <h1>Percentage Calculator</h1>
 
+    <label>Value</label>
+    <input type="number" id="value" placeholder="Enter value">
+
+    <label>Percentage (%)</label>
+    <input type="number" id="percentage" placeholder="Enter percentage">
+
+    <button onclick="calculatePercentage()">Calculate</button>
+
+    <div class="result" id="result"></div>
+
+    <h2>How this percentage calculator works</h2>
     <p>
-      This calculator helps you solve common percentage problems quickly and easily.
-      Use it to find percentages, compare values, or calculate increases and decreases.
+      This calculator helps you quickly find a percentage of a number.
+      It can be used to calculate discounts, increases, decreases, marks,
+      interest, and more.
     </p>
 
-    <hr>
-
-    <!-- WHAT IS X% OF Y -->
-    <h2>What is X% of Y?</h2>
-
-    <input type="number" id="p1" placeholder="Enter percentage (X)">
-    <input type="number" id="p2" placeholder="Enter number (Y)">
-
-    <button onclick="calcPercentOf()">Calculate</button>
-    <p class="result" id="result1"></p>
-
-    <hr>
-
-    <!-- X IS WHAT % OF Y -->
-    <h2>X is what percent of Y?</h2>
-
-    <input type="number" id="p3" placeholder="Enter X">
-    <input type="number" id="p4" placeholder="Enter Y">
-
-    <button onclick="calcWhatPercent()">Calculate</button>
-    <p class="result" id="result2"></p>
-
-    <hr>
-
-    <!-- PERCENTAGE CHANGE -->
-    <h2>Percentage Increase / Decrease</h2>
-
-    <input type="number" id="p5" placeholder="Original value">
-    <input type="number" id="p6" placeholder="New value">
-
-    <button onclick="calcChange()">Calculate</button>
-    <p class="result" id="result3"></p>
+    <h2>Example</h2>
+    <p>
+      If you want to find 10% of 500, enter 500 as the value and 10 as the percentage.
+      The result will be 50.
+    </p>
 
     <p class="note">
-      Note: Results are rounded for simplicity.
+      <strong>Note:</strong> This calculator provides simple percentage calculations.
+      Results are for general understanding and educational use.
     </p>
 
   </div>
 
   <script>
-    function calcPercentOf() {
-      let x = Number(document.getElementById("p1").value);
-      let y = Number(document.getElementById("p2").value);
+    function calculatePercentage() {
+      let value = parseFloat(document.getElementById("value").value);
+      let percentage = parseFloat(document.getElementById("percentage").value);
 
-      if (!x || !y) {
-        document.getElementById("result1").innerText = "Please enter both values.";
+      if (isNaN(value) || isNaN(percentage)) {
+        document.getElementById("result").innerHTML = "Please enter valid numbers.";
         return;
       }
 
-      let result = (x / 100) * y;
-      document.getElementById("result1").innerText =
-        x + "% of " + y + " is " + result.toFixed(2);
-    }
-
-    function calcWhatPercent() {
-      let x = Number(document.getElementById("p3").value);
-      let y = Number(document.getElementById("p4").value);
-
-      if (!x || !y) {
-        document.getElementById("result2").innerText = "Please enter both values.";
-        return;
-      }
-
-      let result = (x / y) * 100;
-      document.getElementById("result2").innerText =
-        x + " is " + result.toFixed(2) + "% of " + y;
-    }
-
-    function calcChange() {
-      let oldVal = Number(document.getElementById("p5").value);
-      let newVal = Number(document.getElementById("p6").value);
-
-      if (!oldVal || !newVal) {
-        document.getElementById("result3").innerText = "Please enter both values.";
-        return;
-      }
-
-      let change = ((newVal - oldVal) / oldVal) * 100;
-      let type = change >= 0 ? "increase" : "decrease";
-
-      document.getElementById("result3").innerText =
-        "This is a " + Math.abs(change).toFixed(2) + "% " + type + ".";
-    }
-  </script>
-
-</body>
-</html>  <!-- WHAT IS X% OF Y -->
-  <h2>What is X% of Y?</h2>
-
-  <input type="number" id="p1" placeholder="Percentage (X)"> %
-  of
-  <input type="number" id="p2" placeholder="Number (Y)">
-  <br><br>
-
-  <button onclick="calcPercentOf()">Calculate</button>
-
-  <p id="result1"></p>
-
-  <hr>
-
-  <!-- X IS WHAT % OF Y -->
-  <h2>X is what percent of Y?</h2>
-
-  <input type="number" id="p3" placeholder="X">
-  is what % of
-  <input type="number" id="p4" placeholder="Y">
-  <br><br>
-
-  <button onclick="calcWhatPercent()">Calculate</button>
-
-  <p id="result2"></p>
-
-  <hr>
-
-  <!-- PERCENTAGE CHANGE -->
-  <h2>Percentage Increase / Decrease</h2>
-
-  Original Value:
-  <input type="number" id="p5"><br><br>
-
-  New Value:
-  <input type="number" id="p6"><br><br>
-
-  <button onclick="calcChange()">Calculate</button>
-
-  <p id="result3"></p>
-
-  <p style="font-size:14px; color:gray;">
-    Note: Results are rounded for simplicity.
-  </p>
-
-  <script>
-    function calcPercentOf() {
-      let x = Number(document.getElementById("p1").value);
-      let y = Number(document.getElementById("p2").value);
-
-      if (!x || !y) {
-        document.getElementById("result1").innerText = "Please enter both values.";
-        return;
-      }
-
-      let result = (x / 100) * y;
-      document.getElementById("result1").innerText =
-        x + "% of " + y + " is " + result.toFixed(2);
-    }
-
-    function calcWhatPercent() {
-      let x = Number(document.getElementById("p3").value);
-      let y = Number(document.getElementById("p4").value);
-
-      if (!x || !y) {
-        document.getElementById("result2").innerText = "Please enter both values.";
-        return;
-      }
-
-      let result = (x / y) * 100;
-      document.getElementById("result2").innerText =
-        x + " is " + result.toFixed(2) + "% of " + y;
-    }
-
-    function calcChange() {
-      let oldVal = Number(document.getElementById("p5").value);
-      let newVal = Number(document.getElementById("p6").value);
-
-      if (!oldVal || !newVal) {
-        document.getElementById("result3").innerText = "Please enter both values.";
-        return;
-      }
-
-      let change = ((newVal - oldVal) / oldVal) * 100;
-
-      let type = change >= 0 ? "increase" : "decrease";
-
-      document.getElementById("result3").innerText =
-        "This is a " + Math.abs(change).toFixed(2) + "% " + type + ".";
+      let result = (value * percentage) / 100;
+      document.getElementById("result").innerHTML =
+        percentage + "% of " + value + " is " + result;
     }
   </script>
 
