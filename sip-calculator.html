@@ -5,7 +5,7 @@
 
   <!-- UNIQUE PER PAGE -->
   <title>SIP Calculator – Monthly Investment Growth | SmartCalcs</title>
-  <meta name="description" content="Free SIP calculator to estimate monthly investment returns and total growth over time. Simple, accurate, and easy to use.">
+  <meta name="description" content="Calculate SIP returns and view investment growth with a simple chart. Free SIP calculator by SmartCalcs.">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -30,40 +30,39 @@
 
     h2 {
       font-size: 18px;
-      margin-top: 32px;
+      margin-top: 30px;
     }
 
     p {
       font-size: 15px;
       line-height: 1.6;
-      margin-top: 8px;
     }
 
     .calc-box {
       border: 1px solid #ddd;
       padding: 16px;
-      margin-top: 18px;
+      margin-top: 15px;
     }
 
     label {
       display: block;
       font-weight: bold;
-      margin-top: 14px;
+      margin-top: 12px;
       font-size: 14px;
     }
 
     input {
       width: 100%;
       padding: 8px;
-      margin-top: 6px;
+      margin-top: 5px;
       font-size: 15px;
       box-sizing: border-box;
     }
 
     button {
       width: 100%;
-      margin-top: 18px;
-      padding: 11px;
+      margin-top: 15px;
+      padding: 10px;
       font-size: 15px;
       background: #0b5ed7;
       color: #fff;
@@ -76,21 +75,21 @@
     }
 
     .result {
-      margin-top: 14px;
+      margin-top: 12px;
       font-size: 16px;
       font-weight: bold;
     }
 
     canvas {
-      margin-top: 22px;
+      margin-top: 20px;
       width: 100%;
       max-height: 260px;
       display: none;
     }
 
     .ad-slot {
-      margin: 32px 0;
-      padding: 12px;
+      margin: 30px 0;
+      padding: 10px;
       border: 1px dashed #ccc;
       text-align: center;
       font-size: 13px;
@@ -105,7 +104,7 @@
     .note {
       font-size: 13px;
       color: #555;
-      margin-top: 32px;
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -118,21 +117,21 @@
   <h1>SIP Calculator</h1>
 
   <p>
-    Use this SIP calculator to estimate the future value of your monthly investments
-    based on expected returns and investment duration.
+    This SIP calculator helps you estimate the future value of your monthly SIP investments
+    using compound interest and shows growth over time.
   </p>
 
   <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="monthly">Monthly Investment (₹)</label>
-    <input type="number" id="monthly" placeholder="e.g. 5000">
+    <input type="number" id="monthly" placeholder="e.g. 5000" aria-label="Monthly investment amount">
 
     <label for="rate">Expected Annual Return (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 12">
+    <input type="number" id="rate" placeholder="e.g. 12" aria-label="Expected annual return rate">
 
     <label for="years">Investment Duration (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 10">
+    <input type="number" id="years" placeholder="e.g. 10" aria-label="Investment duration in years">
 
     <button onclick="calculate()">Calculate</button>
 
@@ -149,26 +148,27 @@
   <!-- SEO CONTENT -->
   <h2>How SIP returns are calculated</h2>
   <p>
-    SIP returns are calculated using monthly compounding.
-    Each investment grows for a different period, which helps
-    build wealth steadily over time.
+    SIP returns are calculated using compound interest applied monthly.
+    Each monthly investment compounds for a different duration, resulting
+    in long-term wealth creation.
   </p>
 
   <h2>Example</h2>
   <p>
-    Investing ₹5,000 every month for 10 years at an expected return of 12%
-    can result in a significantly higher final value due to compounding.
+    If you invest ₹5,000 every month for 10 years at an expected return of 12% per year,
+    the calculator estimates the final value and visualizes the growth trend.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
-    <li><a href="percentage-calculator.html">Percentage Calculator</a></li>
-    <li><a href="emi-calculator.html">EMI Calculator</a></li>
     <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="percentage-calculator.html">Percentage Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are estimates only. Actual investment returns may vary.
+    <strong>Note:</strong> Results are estimates only and provided for informational purposes.
+    Actual returns may vary based on market conditions.
   </p>
 
 </div>
@@ -179,26 +179,29 @@ function calculate() {
   const rate = Number(document.getElementById("rate").value) / 100 / 12;
   const years = Number(document.getElementById("years").value);
 
-  if (P <= 0 || years <= 0 || rate <= 0) {
-    document.getElementById("result").innerHTML = "Please enter valid values.";
+  if (P <= 0 || years <= 0 || rate < 0) {
+    document.getElementById("result").innerHTML =
+      "Please enter valid positive values.";
     document.getElementById("invested").innerHTML = "";
     return;
   }
 
-  let total = 0;
   let values = [];
-  const months = years * 12;
+  let months = years * 12;
+  let total = 0;
 
   for (let i = 1; i <= months; i++) {
     total = (total + P) * (1 + rate);
     if (i % 12 === 0) values.push(Math.round(total));
   }
 
+  const investedAmount = P * months;
+
   document.getElementById("result").innerHTML =
     "Estimated Value: ₹" + values[values.length - 1].toLocaleString("en-IN");
 
   document.getElementById("invested").innerHTML =
-    "Total Invested: ₹" + (P * months).toLocaleString("en-IN");
+    "Total Invested: ₹" + investedAmount.toLocaleString("en-IN");
 
   drawChart(values);
 }
@@ -224,10 +227,30 @@ function drawChart(data) {
   data.forEach((val, i) => {
     const x = padding + i * stepX;
     const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
   });
 
   ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle = "#555";
+  ctx.font = "12px Arial";
+
+  // Y-axis max value
+  ctx.fillText(
+    "₹" + max.toLocaleString("en-IN"),
+    6,
+    padding
+  );
+
+  // X-axis labels
+  ctx.fillText("0", padding, canvas.height - 8);
+  ctx.fillText(
+    data.length + " yrs",
+    canvas.width - padding - 30,
+    canvas.height - 8
+  );
 }
 </script>
 
