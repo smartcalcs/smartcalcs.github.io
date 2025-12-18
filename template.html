@@ -233,9 +233,24 @@ function drawChart(data) {
 
   ctx.stroke();
 
-  ctx.fillStyle = "#444";
+  // Axis labels
+  ctx.fillStyle = "#555";
   ctx.font = "12px Arial";
-  ctx.fillText("Years", canvas.width / 2 - 15, canvas.height - 8);
+
+  // Y-axis max value
+  ctx.fillText(
+    "₹" + max.toLocaleString("en-IN"),
+    6,
+    padding
+  );
+
+  // X-axis labels
+  ctx.fillText("0", padding, canvas.height - 8);
+  ctx.fillText(
+    data.length + " yrs",
+    canvas.width - padding - 30,
+    canvas.height - 8
+  );
 }
 </script>
 
