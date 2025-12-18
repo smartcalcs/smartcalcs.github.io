@@ -2,163 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <!-- CHANGE TITLE FOR EACH CALCULATOR -->
-  <title>Calculator Title | SmartCalcs</title>
-
+  <title>Income Tax Calculator – MyCalcSite</title>
+  <meta name="description" content="Calculate your income tax easily with our free online tax calculator. Enter your income and get instant results.">
+  <meta name="keywords" content="tax calculator, income tax calculator, free calculator">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- CHANGE DESCRIPTION FOR EACH CALCULATOR -->
-  <meta name="description" content="Short description of what this calculator does. Keep under 160 characters.">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 20px;
-      color: #333;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: #ffffff;
-      padding: 22px;
-      border-radius: 8px;
-    }
-
-    h1 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      font-size: 18px;
-      margin-top: 30px;
-    }
-
-    label {
-      font-weight: bold;
-      margin-top: 12px;
-      display: block;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 12px;
-      background: #2563eb;
-      color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1e4fd6;
-    }
-
-    .result {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    p {
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    ul {
-      font-size: 14px;
-      padding-left: 18px;
-    }
-
-    .note {
-      margin-top: 25px;
-      font-size: 13px;
-      color: #555;
-    }
-
-    .related a {
-      color: #2563eb;
-      text-decoration: none;
-    }
-
-    .related a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/styles.css">
+  <!-- You may include a light/dark theme CSS here -->
 </head>
-
 <body>
+  <header>
+    <div class="container header-content">
+      <h1 class="logo"><a href="/">MyCalcSite</a></h1>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/calculators/finance/">Finance</a></li>
+          <li><a href="/calculators/health/">Health</a></li>
+          <li><a href="/calculators/fitness/">Fitness</a></li>
+          <li><a href="/calculators/other/">More</a></li>
+        </ul>
+      </nav>
+      <!-- Optional: dark mode toggle switch -->
+    </div>
+  </header>
 
-<div class="container">
+  <main class="container">
+    <!-- Calculator Article -->
+    <article class="calculator">
+      <h2>Income Tax Calculator</h2>
+      <p>Use this calculator to estimate your annual income tax. Enter your annual income below and see an instant tax breakdown.</p>
+      
+      <section class="calculator-inputs">
+        <label for="income">Annual Income:</label>
+        <input id="income" name="income" type="number" min="0" placeholder="e.g. 50000" aria-describedby="income-help">
+        <p id="income-help" class="help-text">Enter income in your local currency.</p>
+        
+        <label for="status">Filing Status:</label>
+        <select id="status" name="status">
+          <option value="single">Single</option>
+          <option value="married">Married Joint</option>
+        </select>
+        
+        <button id="calculate-btn">Calculate</button>
+      </section>
 
-  <!-- CHANGE H1 FOR EACH CALCULATOR -->
-  <h1>Calculator Heading</h1>
+      <!-- AdSense ad unit -->
+      <aside class="adsense-unit">
+        <!-- Example ad code or placeholder: -->
+        <div id="ad-top-banner">
+          <!-- AdSense 728x90 leaderboard -->
+        </div>
+      </aside>
 
-  <!-- CALCULATOR INPUTS START -->
-  <!-- Replace inputs based on calculator -->
-  <label>Input Field 1</label>
-  <input type="number" placeholder="Enter value">
+      <section class="calculator-results">
+        <h3>Results</h3>
+        <p>Estimated Tax: <strong><span id="taxResult">--</span></strong></p>
+        <p>Marginal Rate: <strong><span id="rateResult">--</span></strong></p>
+        <!-- Chart Container -->
+        <div class="chart-container">
+          <canvas id="resultChart" width="400" height="250" aria-label="Tax breakdown chart" role="img"></canvas>
+        </div>
+      </section>
+      
+      <!-- Ad unit between content -->
+      <aside class="adsense-unit">
+        <div id="ad-inline-rectangle">
+          <!-- AdSense 300x250 medium rectangle -->
+        </div>
+      </aside>
+    </article>
 
-  <label>Input Field 2</label>
-  <input type="number" placeholder="Enter value">
+    <!-- Related/Additional Calculators -->
+    <section class="related-calculators">
+      <h3>More Calculators</h3>
+      <ul>
+        <li><a href="/calculators/finance/mortgage.html">Mortgage Calculator</a></li>
+        <li><a href="/calculators/finance/loan.html">Loan Calculator</a></li>
+        <li><a href="/calculators/finance/savings.html">Savings Calculator</a></li>
+      </ul>
+    </section>
+  </main>
 
-  <button onclick="calculate()">Calculate</button>
-  <!-- CALCULATOR INPUTS END -->
+  <footer>
+    <div class="container footer-content">
+      <nav>
+        <ul class="footer-nav">
+          <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Service</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <p>&copy; 2025 MyCalcSite. All rights reserved.</p>
+    </div>
+  </footer>
 
-  <!-- RESULT -->
-  <div class="result" id="result"></div>
-
-  <!-- EXPLANATION -->
-  <h2>How this calculator works</h2>
-  <p>
-    Explain in simple terms what this calculator does and how the values are calculated.
-    Keep it short and human-readable.
-  </p>
-
-  <!-- EXAMPLE -->
-  <h2>Example</h2>
-  <p>
-    Provide one realistic example with numbers users understand.
-  </p>
-
-  <!-- RELATED CALCULATORS -->
-  <h2>Related Calculators</h2>
-  <ul class="related">
-    <li><a href="sip-calculator.html">SIP Calculator</a></li>
-    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
-    <li><a href="fd-calculator.html">FD Calculator</a></li>
-  </ul>
-
-  <!-- NOTE (ONLY ONE PER PAGE) -->
-  <p class="note">
-    <strong>Note:</strong> This calculator provides estimated results based on the inputs
-    provided. Actual results may vary.
-  </p>
-
-</div>
-
-<!-- CALCULATOR LOGIC -->
-<script>
-function calculate() {
-  // Replace this logic per calculator
-  document.getElementById("result").innerHTML = "Result will appear here.";
-}
-</script>
-
+  <script src="/js/calculator.js"></script>
 </body>
 </html>
