@@ -75,7 +75,7 @@
     }
 
     .result {
-      margin-top: 15px;
+      margin-top: 12px;
       font-size: 16px;
       font-weight: bold;
     }
@@ -117,25 +117,26 @@
   <h1>SIP Calculator</h1>
 
   <p>
-    This SIP calculator helps you estimate the future value of your monthly investments
-    and visualizes growth over time.
+    This SIP calculator helps you estimate the future value of your monthly SIP investments
+    using compound interest and shows growth over time.
   </p>
 
   <!-- CALCULATOR -->
   <div class="calc-box">
 
-    <label>Monthly Investment (₹)</label>
-    <input type="number" id="monthly" placeholder="e.g. 5000">
+    <label for="monthly">Monthly Investment (₹)</label>
+    <input type="number" id="monthly" placeholder="e.g. 5000" aria-label="Monthly investment amount">
 
-    <label>Expected Annual Return (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 12">
+    <label for="rate">Expected Annual Return (%)</label>
+    <input type="number" id="rate" placeholder="e.g. 12" aria-label="Expected annual return rate">
 
-    <label>Investment Duration (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 10">
+    <label for="years">Investment Duration (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 10" aria-label="Investment duration in years">
 
     <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result"></div>
+    <div class="result" id="invested"></div>
 
     <canvas id="growthChart"></canvas>
 
@@ -148,13 +149,14 @@
   <h2>How SIP returns are calculated</h2>
   <p>
     SIP returns are calculated using compound interest applied monthly.
-    Each monthly investment grows for a different duration.
+    Each monthly investment compounds for a different duration, resulting
+    in long-term wealth creation.
   </p>
 
   <h2>Example</h2>
   <p>
-    Investing ₹5,000 every month for 10 years at 12% annual return
-    can generate significant wealth over time.
+    If you invest ₹5,000 every month for 10 years at an expected return of 12% per year,
+    the calculator estimates the final value and visualizes the growth trend.
   </p>
 
   <h2>Related Calculators</h2>
@@ -165,7 +167,8 @@
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are estimates only. Actual returns may vary.
+    <strong>Note:</strong> Results are estimates only and provided for informational purposes.
+    Actual returns may vary based on market conditions.
   </p>
 
 </div>
@@ -176,8 +179,10 @@ function calculate() {
   const rate = Number(document.getElementById("rate").value) / 100 / 12;
   const years = Number(document.getElementById("years").value);
 
-  if (!P || !rate || !years) {
-    document.getElementById("result").innerHTML = "Please enter all values.";
+  if (P <= 0 || years <= 0 || rate < 0) {
+    document.getElementById("result").innerHTML =
+      "Please enter valid positive values.";
+    document.getElementById("invested").innerHTML = "";
     return;
   }
 
@@ -190,8 +195,13 @@ function calculate() {
     if (i % 12 === 0) values.push(Math.round(total));
   }
 
+  const investedAmount = P * months;
+
   document.getElementById("result").innerHTML =
     "Estimated Value: ₹" + values[values.length - 1].toLocaleString("en-IN");
+
+  document.getElementById("invested").innerHTML =
+    "Total Invested: ₹" + investedAmount.toLocaleString("en-IN");
 
   drawChart(values);
 }
@@ -222,6 +232,10 @@ function drawChart(data) {
   });
 
   ctx.stroke();
+
+  ctx.fillStyle = "#444";
+  ctx.font = "12px Arial";
+  ctx.fillText("Years", canvas.width / 2 - 15, canvas.height - 8);
 }
 </script>
 
