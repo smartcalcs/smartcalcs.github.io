@@ -2,30 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Percentage Calculator – Increase, Decrease & Percentage of a Number | SmartCalcs</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Free percentage calculator to find percentage of a number, percentage increase, decrease, and what percent one number is of another.">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>Percentage Calculator – Calculate Percentage Easily | SmartCalcs</title>
+  <meta name="description" content="Free percentage calculator to find percentage, percentage increase or decrease, and percentage values instantly. Simple and accurate.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
       margin: 0;
-      padding: 20px;
-      color: #333;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
     }
 
-    .container {
-      max-width: 560px;
+    .page {
+      max-width: 760px;
       margin: auto;
-      background: #ffffff;
-      padding: 22px;
-      border-radius: 8px;
+      padding: 18px;
     }
 
     h1 {
-      font-size: 22px;
-      margin-bottom: 10px;
+      font-size: 24px;
+      margin-bottom: 8px;
     }
 
     h2 {
@@ -33,136 +33,202 @@
       margin-top: 30px;
     }
 
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
     label {
+      display: block;
       font-weight: bold;
       margin-top: 12px;
-      display: block;
+      font-size: 14px;
     }
 
     input, select {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px;
+      font-size: 15px;
+      box-sizing: border-box;
     }
 
     button {
       width: 100%;
       margin-top: 15px;
-      padding: 12px;
-      background: #2563eb;
-      color: #ffffff;
+      padding: 10px;
+      font-size: 15px;
+      background: #0b5ed7;
+      color: #fff;
       border: none;
-      border-radius: 6px;
-      font-size: 16px;
       cursor: pointer;
     }
 
     button:hover {
-      background: #1e4fd6;
+      background: #084298;
     }
 
     .result {
-      margin-top: 20px;
-      font-size: 18px;
+      margin-top: 12px;
+      font-size: 16px;
       font-weight: bold;
     }
 
-    p {
+    .ad-slot {
+      margin: 30px 0;
+      padding: 10px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
       font-size: 14px;
-      line-height: 1.6;
     }
 
     .note {
-      margin-top: 25px;
       font-size: 13px;
       color: #555;
+      margin-top: 30px;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="page">
 
+  <!-- ONE H1 ONLY -->
   <h1>Percentage Calculator</h1>
 
-  <label>Select Calculation Type</label>
-  <select id="type">
-    <option value="of">Percentage of a Number</option>
-    <option value="increase">Percentage Increase</option>
-    <option value="decrease">Percentage Decrease</option>
-    <option value="what">What Percentage?</option>
-  </select>
-
-  <label>Value 1</label>
-  <input type="number" id="value1" placeholder="Enter first value">
-
-  <label>Value 2 (%) or Total</label>
-  <input type="number" id="value2" placeholder="Enter second value">
-
-  <button onclick="calculate()">Calculate</button>
-
-  <div class="result" id="result"></div>
-
-  <h2>How this percentage calculator works</h2>
   <p>
-    This calculator helps you solve common percentage problems such as
-    finding a percentage of a number, calculating percentage increase or decrease,
-    and determining what percentage one value is of another.
+    This percentage calculator helps you calculate percentage values,
+    find what percent one number is of another, and calculate percentage
+    increase or decrease.
   </p>
 
-  <h2>Examples</h2>
+  <!-- CALCULATOR -->
+  <div class="calc-box">
+
+    <label for="mode">Calculation Type</label>
+    <select id="mode" onchange="updateLabels(); clearResult();">
+      <option value="of">What is % of a number</option>
+      <option value="is">X is what % of Y</option>
+      <option value="change">Percentage Increase / Decrease</option>
+    </select>
+
+    <label id="label1" for="value">Value</label>
+    <input type="number" id="value" placeholder="e.g. 50" oninput="clearResult()">
+
+    <label id="label2" for="percentage">Percentage (%)</label>
+    <input type="number" id="percentage" placeholder="e.g. 20" oninput="clearResult()">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+
+  </div>
+
+  <!-- AD PLACEHOLDER -->
+  <div class="ad-slot">Advertisement</div>
+
+  <!-- SEO CONTENT -->
+  <h2>How percentage is calculated</h2>
   <p>
-    • 10% of 500 = 50<br>
-    • 500 increased by 10% = 550<br>
-    • 500 decreased by 10% = 450<br>
-    • 50 is 10% of 500
+    A percentage represents a number out of 100.
+    It is commonly used to compare values, calculate changes,
+    and understand proportions.
   </p>
+
+  <h2>Example</h2>
+  <p>
+    20% of 50 equals 10.  
+    If a value increases from 50 to 60, the percentage increase is 20%.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+  </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are calculated using standard percentage formulas
-    and are intended for educational and general use.
+    <strong>Note:</strong> Results are calculated instantly and may be rounded.
   </p>
 
 </div>
 
 <script>
-function calculate() {
-  let type = document.getElementById("type").value;
-  let v1 = parseFloat(document.getElementById("value1").value);
-  let v2 = parseFloat(document.getElementById("value2").value);
-  let resultText = "";
+function updateLabels() {
+  const mode = document.getElementById("mode").value;
+  const label1 = document.getElementById("label1");
+  const label2 = document.getElementById("label2");
 
-  if (isNaN(v1) || isNaN(v2)) {
-    document.getElementById("result").innerHTML = "Please enter valid numbers.";
+  if (mode === "of") {
+    label1.textContent = "Value";
+    label2.textContent = "Percentage (%)";
+  } else if (mode === "is") {
+    label1.textContent = "Value (X)";
+    label2.textContent = "Total Value (Y)";
+  } else {
+    label1.textContent = "Original Value";
+    label2.textContent = "New Value";
+  }
+}
+
+function clearResult() {
+  document.getElementById("result").innerHTML = "";
+}
+
+function calculate() {
+  const value = Number(document.getElementById("value").value);
+  const percentage = Number(document.getElementById("percentage").value);
+  const mode = document.getElementById("mode").value;
+
+  if (isNaN(value) || isNaN(percentage)) {
+    document.getElementById("result").innerHTML =
+      "Please enter valid numbers.";
     return;
   }
 
-  if (type === "of") {
-    let result = (v1 * v2) / 100;
-    resultText = v2 + "% of " + v1 + " is " + result;
+  let output = "";
+
+  if (mode === "of") {
+    const result = (value * percentage) / 100;
+    output = percentage + "% of " + value + " = " + result;
+
+  } else if (mode === "is") {
+    if (percentage === 0) {
+      output = "Total value cannot be zero.";
+    } else {
+      const result = (value / percentage) * 100;
+      output = value + " is " + result.toFixed(2) + "% of " + percentage;
+    }
+
+  } else if (mode === "change") {
+    if (value === 0) {
+      output = "Original value cannot be zero.";
+    } else {
+      const change = ((percentage - value) / value) * 100;
+      const type = change >= 0 ? "Increase" : "Decrease";
+      output = type + " of " + Math.abs(change).toFixed(2) + "%";
+    }
   }
 
-  if (type === "increase") {
-    let result = v1 + (v1 * v2) / 100;
-    resultText = v1 + " increased by " + v2 + "% is " + result;
-  }
-
-  if (type === "decrease") {
-    let result = v1 - (v1 * v2) / 100;
-    resultText = v1 + " decreased by " + v2 + "% is " + result;
-  }
-
-  if (type === "what") {
-    let result = (v1 / v2) * 100;
-    resultText = v1 + " is " + result.toFixed(2) + "% of " + v2;
-  }
-
-  document.getElementById("result").innerHTML = resultText;
+  document.getElementById("result").innerHTML = output;
 }
+
+// Initialize labels on load
+updateLabels();
 </script>
 
 </body>
