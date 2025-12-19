@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>CAGR Calculator – Compound Annual Growth Rate | SmartCalcs</title>
+  <meta name="description" content="Calculate CAGR (Compound Annual Growth Rate) easily using initial value, final value, and time period. Free CAGR calculator by SmartCalcs.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 15px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .ad-slot {
+      margin: 30px 0;
+      padding: 10px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- ONE H1 ONLY -->
+  <h1>CAGR Calculator</h1>
+
+  <p>
+    This CAGR calculator helps you calculate the Compound Annual Growth Rate of an investment
+    over a specific time period.
+  </p>
+
+  <!-- CALCULATOR -->
+  <div class="calc-box">
+
+    <label for="initial">Initial Value (₹)</label>
+    <input type="number" id="initial" placeholder="e.g. 1,00,000">
+
+    <label for="final">Final Value (₹)</label>
+    <input type="number" id="final" placeholder="e.g. 2,50,000">
+
+    <label for="years">Time Period (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 5">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+
+  </div>
+
+  <!-- AD PLACEHOLDER -->
+  <div class="ad-slot">Advertisement</div>
+
+  <!-- SEO CONTENT -->
+  <h2>What is CAGR?</h2>
+  <p>
+    CAGR (Compound Annual Growth Rate) represents the annual growth rate of an investment
+    assuming it grows at a steady rate every year.
+  </p>
+
+  <h2>How CAGR is calculated</h2>
+  <p>
+    CAGR is calculated using the formula:<br>
+    CAGR = (Final Value / Initial Value)<sup>1 / Years</sup> − 1
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    If an investment grows from ₹1,00,000 to ₹2,50,000 in 5 years,
+    the CAGR shows the average annual growth rate over that period.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="percentage-calculator.html">Percentage Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> CAGR assumes constant growth and does not reflect market volatility.
+  </p>
+
+</div>
+
+<script>
+function calculate() {
+  const initial = Number(document.getElementById("initial").value);
+  const finalValue = Number(document.getElementById("final").value);
+  const years = Number(document.getElementById("years").value);
+
+  if (initial <= 0 || finalValue <= 0 || years <= 0) {
+    document.getElementById("result").innerHTML =
+      "Please enter valid positive values.";
+    return;
+  }
+
+  if (initial === finalValue) {
+    document.getElementById("result").innerHTML =
+      "CAGR: 0% (No growth over the period)";
+    return;
+  }
+
+  const cagr = Math.pow(finalValue / initial, 1 / years) - 1;
+  const multiple = (finalValue / initial).toFixed(2);
+
+  document.getElementById("result").innerHTML =
+    "CAGR: " + (cagr * 100).toFixed(2) + "% per year<br>" +
+    "Investment grew " + multiple + "× in " + years + " years";
+}
+</script>
+
+</body>
+</html>
