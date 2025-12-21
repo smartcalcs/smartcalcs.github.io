@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>Lumpsum Calculator – Investment Growth Calculator | SmartCalcs</title>
-  <meta name="description" content="Free Lumpsum calculator to estimate future value and total gains of a one-time investment. Simple, accurate, and fast.">
+  <!-- UNIQUE PER PAGE -->
+  <title>Lumpsum Calculator – Calculate Investment Growth | SmartCalcs</title>
+  <meta name="description" content="Calculate the future value of a lumpsum investment using expected annual returns. Free Lumpsum Calculator by SmartCalcs with growth chart and examples.">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -22,8 +23,15 @@
       padding: 18px;
     }
 
-    h1 { font-size: 24px; margin-bottom: 8px; }
-    h2 { font-size: 18px; margin-top: 30px; }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+    }
 
     p {
       font-size: 15px;
@@ -62,7 +70,9 @@
       cursor: pointer;
     }
 
-    button:hover { background: #084298; }
+    button:hover {
+      background: #084298;
+    }
 
     .result {
       margin-top: 12px;
@@ -71,8 +81,8 @@
     }
 
     canvas {
-      margin-top: 20px;
-      max-width: 100%;
+      margin-top: 15px;
+      width: 100%;
       display: none;
     }
 
@@ -85,7 +95,10 @@
       color: #666;
     }
 
-    ul { padding-left: 18px; font-size: 14px; }
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
 
     .note {
       font-size: 13px;
@@ -99,38 +112,54 @@
 
 <div class="page">
 
+  <!-- ONE H1 ONLY -->
   <h1>Lumpsum Calculator</h1>
 
   <p>
-    Estimate the future value and total gains of a one-time investment
-    using compound interest.
+    This lumpsum calculator helps you estimate the future value of a one-time investment
+    based on expected annual returns and investment duration.
   </p>
 
+  <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="amount">Investment Amount (₹)</label>
-    <input type="number" id="amount" placeholder="e.g. 100000" min="1" aria-label="Investment amount">
+    <input type="number" id="amount" placeholder="e.g. 5,00,000">
 
     <label for="rate">Expected Annual Return (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 12" step="0.01" min="0" aria-label="Annual return rate">
+    <input type="number" id="rate" placeholder="e.g. 12">
 
     <label for="years">Time Period (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 10" min="1" aria-label="Investment duration">
+    <input type="number" id="years" placeholder="e.g. 10">
 
     <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result"></div>
-
-    <canvas id="chart"></canvas>
+    <canvas id="growthChart"></canvas>
 
   </div>
 
+  <!-- AD PLACEHOLDER -->
   <div class="ad-slot">Advertisement</div>
 
+  <!-- SEO CONTENT -->
   <h2>What is a Lumpsum Investment?</h2>
   <p>
-    A lumpsum investment is a one-time investment where money is invested at once
-    and allowed to grow over time through compounding.
+    A lumpsum investment is a one-time investment where you invest a large amount at once,
+    allowing it to grow over time through compound returns.
+  </p>
+
+  <h2>How Lumpsum Returns are Calculated</h2>
+  <p>
+    The future value of a lumpsum investment is calculated using the compound interest formula:
+    <br>
+    Final Value = Investment × (1 + Rate)<sup>Years</sup>
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    If you invest ₹5,00,000 at an annual return of 12% for 10 years,
+    the calculator shows how much your investment can grow through compounding.
   </p>
 
   <h2>Related Calculators</h2>
@@ -141,43 +170,35 @@
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are estimates only. Actual returns may vary.
+    <strong>Note:</strong> Returns are estimates and actual market returns may vary.
   </p>
 
 </div>
 
 <script>
 function calculate() {
-  const P = Number(amount.value);
-  const r = Number(rate.value) / 100;
-  const t = Math.floor(Number(years.value));
+  const amount = Number(document.getElementById("amount").value);
+  const rate = Number(document.getElementById("rate").value) / 100;
+  const years = Number(document.getElementById("years").value);
 
-  const result = document.getElementById("result");
-  const canvas = document.getElementById("chart");
-
-  if (!P || !r || !t || P <= 0 || r < 0 || t <= 0) {
-    result.textContent = "Please enter valid positive values.";
-    canvas.style.display = "none";
+  if (amount <= 0 || rate <= 0 || years <= 0) {
+    document.getElementById("result").innerHTML =
+      "Please enter valid positive values.";
     return;
   }
 
-  const values = [];
-  for (let i = 0; i <= t; i++) {
-    values.push(P * Math.pow(1 + r, i));
-  }
+  const futureValue = amount * Math.pow(1 + rate, years);
+  const gains = futureValue - amount;
 
-  const finalValue = values.at(-1);
-  const gains = finalValue - P;
+  document.getElementById("result").innerHTML =
+    "Future Value: ₹" + Math.round(futureValue).toLocaleString("en-IN") + "<br>" +
+    "Total Gains: ₹" + Math.round(gains).toLocaleString("en-IN");
 
-  result.innerHTML =
-    `Estimated Value: ₹${finalValue.toLocaleString("en-IN")}<br>
-     Total Gains: ₹${gains.toLocaleString("en-IN")}`;
-
-  drawChart(values);
+  drawChart(amount, rate, years);
 }
 
-function drawChart(data) {
-  const canvas = document.getElementById("chart");
+function drawChart(amount, rate, years) {
+  const canvas = document.getElementById("growthChart");
   const ctx = canvas.getContext("2d");
   canvas.style.display = "block";
 
@@ -186,21 +207,35 @@ function drawChart(data) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const padding = 35;
-  const max = Math.max(...data);
-  const stepX = (canvas.width - padding * 2) / (data.length - 1);
+  let values = [];
+  for (let i = 0; i <= years; i++) {
+    values.push(amount * Math.pow(1 + rate, i));
+  }
+
+  const max = Math.max(...values);
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / years;
 
   ctx.beginPath();
   ctx.strokeStyle = "#0b5ed7";
   ctx.lineWidth = 2;
 
-  data.forEach((val, i) => {
+  values.forEach((val, i) => {
     const x = padding + i * stepX;
-    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    const y =
+      canvas.height - padding -
+      (val / max) * (canvas.height - padding * 2);
+
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
   });
 
   ctx.stroke();
+
+  ctx.fillStyle = "#555";
+  ctx.font = "12px Arial";
+  ctx.fillText("₹" + Math.round(max).toLocaleString("en-IN"), 6, padding);
+  ctx.fillText(years + " yrs", canvas.width - padding - 30, canvas.height - 8);
 }
 </script>
 
