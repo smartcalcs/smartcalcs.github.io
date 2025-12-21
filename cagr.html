@@ -80,6 +80,13 @@
       font-weight: bold;
     }
 
+    canvas {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 260px;
+      display: none;
+    }
+
     .ad-slot {
       margin: 30px 0;
       padding: 10px;
@@ -118,17 +125,18 @@
   <div class="calc-box">
 
     <label for="initial">Initial Value (₹)</label>
-    <input type="number" id="initial" placeholder="e.g. 1,00,000">
+    <input type="number" id="initial" placeholder="e.g. 100000" min="1">
 
     <label for="final">Final Value (₹)</label>
-    <input type="number" id="final" placeholder="e.g. 2,50,000">
+    <input type="number" id="final" placeholder="e.g. 250000" min="1">
 
     <label for="years">Time Period (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 5">
+    <input type="number" id="years" placeholder="e.g. 5" min="1">
 
     <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result"></div>
+
     <canvas id="growthChart"></canvas>
 
   </div>
@@ -169,24 +177,26 @@
 </div>
 
 <script>
-<script>
 function calculate() {
   const initial = Number(document.getElementById("initial").value);
   const finalValue = Number(document.getElementById("final").value);
   const years = Number(document.getElementById("years").value);
 
+  const result = document.getElementById("result");
+  const canvas = document.getElementById("growthChart");
+
   if (initial <= 0 || finalValue <= 0 || years <= 0) {
-    document.getElementById("result").innerHTML =
-      "Please enter valid positive values.";
+    result.textContent = "Please enter valid positive values.";
+    canvas.style.display = "none";
     return;
   }
 
   const cagr = Math.pow(finalValue / initial, 1 / years) - 1;
   const multiple = finalValue / initial;
 
-  document.getElementById("result").innerHTML =
-    "CAGR: " + (cagr * 100).toFixed(2) + "% per year<br>" +
-    "Investment grew " + multiple.toFixed(2) + "× in " + years + " years";
+  result.innerHTML =
+    `CAGR: ${(cagr * 100).toFixed(2)}% per year<br>
+     Investment grew ${multiple.toFixed(2)}× in ${years} years`;
 
   drawChart(initial, cagr, years);
 }
@@ -201,7 +211,7 @@ function drawChart(initial, cagr, years) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  let values = [];
+  const values = [];
   for (let i = 0; i <= years; i++) {
     values.push(initial * Math.pow(1 + cagr, i));
   }
@@ -219,9 +229,7 @@ function drawChart(initial, cagr, years) {
     const y =
       canvas.height - padding -
       (val / max) * (canvas.height - padding * 2);
-
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
 
   ctx.stroke();
