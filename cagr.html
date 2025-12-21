@@ -128,7 +128,9 @@
 
     <button onclick="calculate()">Calculate</button>
 
-    <div class="result" id="result"></div>
+    <div class="result" id="result">
+      <canvas id="growthChart"></canvas>
+    </div>
 
   </div>
 
@@ -168,6 +170,7 @@
 </div>
 
 <script>
+<script>
 function calculate() {
   const initial = Number(document.getElementById("initial").value);
   const finalValue = Number(document.getElementById("final").value);
@@ -179,18 +182,55 @@ function calculate() {
     return;
   }
 
-  if (initial === finalValue) {
-    document.getElementById("result").innerHTML =
-      "CAGR: 0% (No growth over the period)";
-    return;
-  }
-
   const cagr = Math.pow(finalValue / initial, 1 / years) - 1;
-  const multiple = (finalValue / initial).toFixed(2);
+  const multiple = finalValue / initial;
 
   document.getElementById("result").innerHTML =
     "CAGR: " + (cagr * 100).toFixed(2) + "% per year<br>" +
-    "Investment grew " + multiple + "× in " + years + " years";
+    "Investment grew " + multiple.toFixed(2) + "× in " + years + " years";
+
+  drawChart(initial, cagr, years);
+}
+
+function drawChart(initial, cagr, years) {
+  const canvas = document.getElementById("growthChart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  let values = [];
+  for (let i = 0; i <= years; i++) {
+    values.push(initial * Math.pow(1 + cagr, i));
+  }
+
+  const max = Math.max(...values);
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / years;
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  values.forEach((val, i) => {
+    const x = padding + i * stepX;
+    const y =
+      canvas.height - padding -
+      (val / max) * (canvas.height - padding * 2);
+
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+
+  ctx.fillStyle = "#555";
+  ctx.font = "12px Arial";
+  ctx.fillText("₹" + Math.round(max).toLocaleString("en-IN"), 6, padding);
+  ctx.fillText(years + " yrs", canvas.width - padding - 30, canvas.height - 8);
 }
 </script>
 
