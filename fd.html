@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- SEO -->
+  <title>FD Calculator – Fixed Deposit Interest & Maturity Amount | SmartCalcs</title>
+  <meta name="description" content="Free FD calculator to calculate fixed deposit maturity amount and interest earned based on principal, interest rate, tenure and compounding frequency.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 32px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 16px;
+      border-radius: 6px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 9px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 11px;
+      font-size: 16px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    canvas {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 260px;
+      display: none;
+    }
+
+    .ad-slot {
+      margin: 34px 0;
+      padding: 12px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <h1>FD Calculator</h1>
+
+  <p>
+    Use this FD calculator to estimate the maturity amount and interest earned
+    on your fixed deposit based on investment amount, interest rate,
+    tenure and compounding frequency.
+  </p>
+
+  <!-- CALCULATOR -->
+  <div class="calc-box">
+
+    <label for="principal">Deposit Amount (₹)</label>
+    <input type="number" id="principal" placeholder="e.g. 100000" min="1">
+
+    <label for="rate">Annual Interest Rate (%)</label>
+    <input type="number" id="rate" placeholder="e.g. 7" min="0.1" step="0.01">
+
+    <label for="years">Tenure (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 5" min="1">
+
+    <label for="frequency">Compounding Frequency</label>
+    <select id="frequency">
+      <option value="1">Yearly</option>
+      <option value="2">Half-Yearly</option>
+      <option value="4">Quarterly</option>
+      <option value="12">Monthly</option>
+    </select>
+
+    <button onclick="calculateFD()">Calculate FD</button>
+
+    <div class="result" id="maturityResult"></div>
+    <div class="result" id="interestResult"></div>
+
+    <canvas id="fdChart"></canvas>
+  </div>
+
+  <div class="ad-slot">Advertisement</div>
+
+  <!-- SEO CONTENT -->
+  <h2>What is a Fixed Deposit?</h2>
+  <p>
+    A Fixed Deposit (FD) is a safe investment option where you deposit a
+    lump sum amount for a fixed tenure at a predetermined interest rate.
+    The interest is compounded periodically.
+  </p>
+
+  <h2>How FD Interest is Calculated</h2>
+  <p>
+    FD maturity amount is calculated using compound interest.
+    Higher compounding frequency results in higher maturity value.
+  </p>
+
+  <h2>FD Calculation Example</h2>
+  <p>
+    If you invest ₹1,00,000 at 7% interest for 5 years with quarterly compounding,
+    this FD calculator estimates your maturity amount and total interest earned.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
+    <li><a href="rd-calculator.html">RD Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Disclaimer:</strong> FD returns are indicative.
+    Actual returns may vary depending on bank policies and compounding rules.
+  </p>
+
+</div>
+
+<script>
+function calculateFD() {
+  const principal = Number(document.getElementById("principal").value);
+  const rate = Number(document.getElementById("rate").value);
+  const years = Number(document.getElementById("years").value);
+  const freq = Number(document.getElementById("frequency").value);
+
+  if (principal <= 0 || rate <= 0 || years <= 0) {
+    document.getElementById("maturityResult").innerHTML =
+      "Please enter valid positive values.";
+    document.getElementById("interestResult").innerHTML = "";
+    return;
+  }
+
+  const r = rate / 100;
+  const maturity =
+    principal * Math.pow(1 + r / freq, freq * years);
+
+  const interest = maturity - principal;
+
+  document.getElementById("maturityResult").innerHTML =
+    "Maturity Amount: ₹" + Math.round(maturity).toLocaleString("en-IN");
+
+  document.getElementById("interestResult").innerHTML =
+    "Total Interest Earned: ₹" + Math.round(interest).toLocaleString("en-IN");
+
+  drawChart(principal, maturity, years);
+}
+
+function drawChart(principal, maturity, years) {
+  const canvas = document.getElementById("fdChart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const values = [];
+  for (let i = 0; i <= years; i++) {
+    values.push(principal + ((maturity - principal) / years) * i);
+  }
+
+  const max = maturity;
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / years;
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  values.forEach((val, i) => {
+    const x = padding + i * stepX;
+    const y =
+      canvas.height - padding -
+      (val / max) * (canvas.height - padding * 2);
+
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+
+  ctx.fillStyle = "#555";
+  ctx.font = "12px Arial";
+  ctx.fillText("₹" + Math.round(max).toLocaleString("en-IN"), 6, padding);
+  ctx.fillText(years + " yrs", canvas.width - padding - 32, canvas.height - 8);
+}
+</script>
+
+</body>
+</html>
