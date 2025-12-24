@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <title>SIP Calculator – Monthly Investment Growth | SmartCalcs</title>
+  <meta name="description" content="Free SIP calculator to estimate monthly investment returns and visualize long-term growth using compound interest.">
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    main {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 34px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 18px;
+      border-radius: 6px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 9px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 11px;
+      font-size: 16px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .results-primary {
+      margin-top: 16px;
+      padding: 14px;
+      background: #f1f5ff;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .results-secondary {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .trust {
+      font-size: 13px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    canvas {
+      margin-top: 22px;
+      width: 100%;
+      max-height: 260px;
+      display: none;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    details {
+      margin-top: 22px;
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 36px;
+      font-size: 13px;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+<main>
+
+  <!-- HERO -->
+  <section>
+    <h1>SIP Calculator</h1>
+    <p>
+      Calculate the future value of your monthly SIP investments and see how
+      compounding grows your wealth over time.
+    </p>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section class="calc-box">
+
+    <label for="currency">Currency</label>
+    <select id="currency">
+      <option value="$">$ (USD)</option>
+      <option value="₹">₹ (INR)</option>
+      <option value="€">€ (EUR)</option>
+      <option value="£">£ (GBP)</option>
+    </select>
+
+    <label for="monthly">Monthly Investment</label>
+    <input type="number" id="monthly" value="500" min="1">
+
+    <label for="rate">Expected Annual Return (%)</label>
+    <input type="number" id="rate" value="12" step="0.1">
+
+    <label for="years">Investment Duration (Years)</label>
+    <input type="number" id="years" value="10" min="1">
+
+    <button type="button" onclick="calculateSIP()">Calculate SIP</button>
+
+    <!-- RESULTS -->
+    <div id="primaryResult" class="results-primary"></div>
+    <div id="secondaryResult" class="results-secondary"></div>
+
+    <div class="trust">
+      ✔ Instant calculation · ✔ No data stored · ✔ Free to use
+    </div>
+
+    <canvas id="growthChart"></canvas>
+
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <h2>How SIP Returns Are Calculated</h2>
+    <p>
+      SIP returns use monthly compounding. Each investment installment earns
+      returns for a different duration, leading to exponential growth over
+      long-term investing.
+    </p>
+
+    <details>
+      <summary><strong>View SIP Formula</strong></summary>
+      <p>
+        <strong>FV = P × [ ((1+r)<sup>n</sup> − 1) / r ] × (1+r)</strong><br><br>
+        P = Monthly investment<br>
+        r = Monthly rate of return<br>
+        n = Total number of months
+      </p>
+    </details>
+  </section>
+
+  <!-- INTERNAL LINKS -->
+  <section>
+    <h2>Related Calculators</h2>
+    <ul>
+      <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+      <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
+      <li><a href="emi-calculator.html">EMI Calculator</a></li>
+      <li><a href="rd-calculator.html">RD Calculator</a></li>
+    </ul>
+  </section>
+
+  <!-- FOOTER DISCLAIMER -->
+  <footer>
+    Disclaimer: Results are estimates for educational purposes only. Actual
+    market returns may vary.
+  </footer>
+
+</main>
+
+<script>
+function calculateSIP() {
+  const currency = document.getElementById("currency").value;
+  const monthly = Number(document.getElementById("monthly").value);
+  const rate = Number(document.getElementById("rate").value) / 100 / 12;
+  const years = Number(document.getElementById("years").value);
+
+  if (monthly <= 0 || rate <= 0 || years <= 0) {
+    document.getElementById("primaryResult").textContent =
+      "Please enter valid positive values.";
+    document.getElementById("secondaryResult").textContent = "";
+    return;
+  }
+
+  const months = years * 12;
+  let total = 0;
+  let yearlyData = [];
+
+  for (let i = 1; i <= months; i++) {
+    total = (total + monthly) * (1 + rate);
+    if (i % 12 === 0) yearlyData.push(Math.round(total));
+  }
+
+  const invested = monthly * months;
+  const gains = total - invested;
+
+  document.getElementById("primaryResult").textContent =
+    "Estimated Value: " + currency + Math.round(total).toLocaleString();
+
+  document.getElementById("secondaryResult").innerHTML =
+    "Total Invested: " + currency + invested.toLocaleString() +
+    "<br>Total Gains: " + currency + Math.round(gains).toLocaleString();
+
+  drawChart(yearlyData);
+}
+
+function drawChart(data) {
+  const canvas = document.getElementById("growthChart");
+  const ctx = canvas.getContext("2d");
+
+  canvas.style.display = "block";
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const max = Math.max(...data);
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / (data.length - 1);
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  data.forEach((val, i) => {
+    const x = padding + i * stepX;
+    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+}
+</script>
+
+</body>
+</html>
