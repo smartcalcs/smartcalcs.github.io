@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- UNIQUE PER PAGE -->
   <title>CAGR Calculator – Compound Annual Growth Rate | SmartCalcs</title>
-  <meta name="description" content="Calculate CAGR (Compound Annual Growth Rate) easily using initial value, final value, and time period. Free CAGR calculator by SmartCalcs.">
+  <meta name="description" content="Free CAGR Calculator to calculate compound annual growth rate for stocks, mutual funds, and investments. Simple, fast, and accurate CAGR calculator.">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,6 +30,11 @@
     h2 {
       font-size: 18px;
       margin-top: 30px;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin-top: 18px;
     }
 
     p {
@@ -110,10 +114,8 @@
 </head>
 
 <body>
-
 <div class="page">
 
-  <!-- ONE H1 ONLY -->
   <h1>CAGR Calculator</h1>
 
   <p>
@@ -121,7 +123,6 @@
     over a specific time period.
   </p>
 
-  <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="initial">Initial Value (₹)</label>
@@ -136,24 +137,20 @@
     <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result"></div>
-
     <canvas id="growthChart"></canvas>
 
   </div>
 
-  <!-- AD PLACEHOLDER -->
   <div class="ad-slot">Advertisement</div>
 
-  <!-- SEO CONTENT -->
   <h2>What is CAGR?</h2>
   <p>
-    CAGR (Compound Annual Growth Rate) represents the annual growth rate of an investment
+    CAGR (Compound Annual Growth Rate) represents the average annual growth rate of an investment
     assuming it grows at a steady rate every year.
   </p>
 
   <h2>How CAGR is calculated</h2>
   <p>
-    CAGR is calculated using the formula:<br>
     CAGR = (Final Value / Initial Value)<sup>1 / Years</sup> − 1
   </p>
 
@@ -161,6 +158,26 @@
   <p>
     If an investment grows from ₹1,00,000 to ₹2,50,000 in 5 years,
     the CAGR shows the average annual growth rate over that period.
+  </p>
+
+  <h2>Frequently Asked Questions</h2>
+
+  <h3>Is CAGR the same as actual returns?</h3>
+  <p>
+    No. CAGR assumes steady growth every year. Actual investments fluctuate,
+    but CAGR helps compare long-term performance.
+  </p>
+
+  <h3>Can CAGR be negative?</h3>
+  <p>
+    Yes. If the final value is lower than the initial value,
+    the CAGR will be negative, indicating an average annual loss.
+  </p>
+
+  <h3>Is CAGR useful for mutual funds?</h3>
+  <p>
+    Yes. CAGR is commonly used to measure mutual fund, stock,
+    and long-term investment performance.
   </p>
 
   <h2>Related Calculators</h2>
@@ -181,22 +198,20 @@ function calculate() {
   const initial = Number(document.getElementById("initial").value);
   const finalValue = Number(document.getElementById("final").value);
   const years = Number(document.getElementById("years").value);
-
   const result = document.getElementById("result");
-  const canvas = document.getElementById("growthChart");
 
   if (initial <= 0 || finalValue <= 0 || years <= 0) {
     result.textContent = "Please enter valid positive values.";
-    canvas.style.display = "none";
     return;
   }
 
-  const cagr = Math.pow(finalValue / initial, 1 / years) - 1;
-  const multiple = finalValue / initial;
+  const ratio = finalValue / initial;
+  const cagr = Math.pow(ratio, 1 / years) - 1;
+  const sign = cagr >= 0 ? "" : "Loss of ";
 
   result.innerHTML =
-    `CAGR: ${(cagr * 100).toFixed(2)}% per year<br>
-     Investment grew ${multiple.toFixed(2)}× in ${years} years`;
+    `${sign}CAGR: ${(Math.abs(cagr) * 100).toFixed(2)}% per year<br>
+     Investment value became ${ratio.toFixed(2)}× in ${years} years`;
 
   drawChart(initial, cagr, years);
 }
