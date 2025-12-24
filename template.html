@@ -17,6 +17,29 @@
       color: #222;
     }
 
+    /* HEADER */
+    .site-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .site-header .inner {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-header a {
+      text-decoration: none;
+      color: #0b5ed7;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
     .page {
       max-width: 760px;
       margin: auto;
@@ -36,6 +59,16 @@
     p {
       font-size: 15px;
       line-height: 1.6;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
     }
 
     .calc-box {
@@ -106,12 +139,39 @@
       color: #555;
       margin-top: 30px;
     }
+
+    footer {
+      margin-top: 50px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
+    }
   </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
 <div class="page">
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › SIP Calculator
+  </div>
 
   <!-- ONE H1 ONLY -->
   <h1>SIP Calculator</h1>
@@ -125,13 +185,13 @@
   <div class="calc-box">
 
     <label for="monthly">Monthly Investment (₹)</label>
-    <input type="number" id="monthly" placeholder="e.g. 5000" aria-label="Monthly investment amount">
+    <input type="number" id="monthly" placeholder="e.g. 5000">
 
     <label for="rate">Expected Annual Return (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 12" aria-label="Expected annual return rate">
+    <input type="number" id="rate" placeholder="e.g. 12">
 
     <label for="years">Investment Duration (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 10" aria-label="Investment duration in years">
+    <input type="number" id="years" placeholder="e.g. 10">
 
     <button onclick="calculate()">Calculate</button>
 
@@ -142,7 +202,7 @@
 
   </div>
 
-  <!-- AD PLACEHOLDER -->
+  <!-- AD -->
   <div class="ad-slot">Advertisement</div>
 
   <!-- SEO CONTENT -->
@@ -155,8 +215,8 @@
 
   <h2>Example</h2>
   <p>
-    If you invest ₹5,000 every month for 10 years at an expected return of 12% per year,
-    the calculator estimates the final value and visualizes the growth trend.
+    Investing ₹5,000 per month for 10 years at 12% annual returns shows
+    how disciplined investing builds wealth over time.
   </p>
 
   <h2>Related Calculators</h2>
@@ -167,11 +227,15 @@
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are estimates only and provided for informational purposes.
-    Actual returns may vary based on market conditions.
+    <strong>Note:</strong> Results are estimates only. Actual market returns may vary.
   </p>
 
 </div>
+
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© 2025 SmartCalcs</span>
+</footer>
 
 <script>
 function calculate() {
@@ -180,8 +244,7 @@ function calculate() {
   const years = Number(document.getElementById("years").value);
 
   if (P <= 0 || years <= 0 || rate < 0) {
-    document.getElementById("result").innerHTML =
-      "Please enter valid positive values.";
+    document.getElementById("result").innerHTML = "Please enter valid values.";
     document.getElementById("invested").innerHTML = "";
     return;
   }
@@ -195,13 +258,11 @@ function calculate() {
     if (i % 12 === 0) values.push(Math.round(total));
   }
 
-  const investedAmount = P * months;
-
   document.getElementById("result").innerHTML =
-    "Estimated Value: ₹" + values[values.length - 1].toLocaleString("en-IN");
+    "Estimated Value: ₹" + values.at(-1).toLocaleString("en-IN");
 
   document.getElementById("invested").innerHTML =
-    "Total Invested: ₹" + investedAmount.toLocaleString("en-IN");
+    "Total Invested: ₹" + (P * months).toLocaleString("en-IN");
 
   drawChart(values);
 }
@@ -227,30 +288,10 @@ function drawChart(data) {
   data.forEach((val, i) => {
     const x = padding + i * stepX;
     const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   });
 
   ctx.stroke();
-
-  // Axis labels
-  ctx.fillStyle = "#555";
-  ctx.font = "12px Arial";
-
-  // Y-axis max value
-  ctx.fillText(
-    "₹" + max.toLocaleString("en-IN"),
-    6,
-    padding
-  );
-
-  // X-axis labels
-  ctx.fillText("0", padding, canvas.height - 8);
-  ctx.fillText(
-    data.length + " yrs",
-    canvas.width - padding - 30,
-    canvas.height - 8
-  );
 }
 </script>
 
