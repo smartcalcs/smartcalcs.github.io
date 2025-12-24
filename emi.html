@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- SEO -->
+  <title>EMI Calculator – Loan EMI, Interest & Tenure | SmartCalcs</title>
+  <meta name="description" content="Free EMI calculator to calculate monthly loan EMI, total interest and total repayment for home loan, car loan and personal loan in India.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 32px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 16px;
+      border-radius: 6px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 9px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 11px;
+      font-size: 16px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    canvas {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 260px;
+      display: none;
+    }
+
+    .ad-slot {
+      margin: 34px 0;
+      padding: 12px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <h1>EMI Calculator</h1>
+
+  <p>
+    Use this EMI calculator to estimate your monthly loan EMI,
+    total interest payable, and total repayment amount for any loan.
+  </p>
+
+  <!-- CALCULATOR -->
+  <div class="calc-box">
+
+    <label for="loan">Loan Amount (₹)</label>
+    <input type="number" id="loan" placeholder="e.g. 500000" min="1">
+
+    <label for="rate">Annual Interest Rate (%)</label>
+    <input type="number" id="rate" placeholder="e.g. 9" min="0.1" step="0.01">
+
+    <label for="years">Loan Tenure (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 10" min="1">
+
+    <button onclick="calculateEMI()">Calculate EMI</button>
+
+    <div class="result" id="emiResult"></div>
+    <div class="result" id="interestResult"></div>
+    <div class="result" id="totalResult"></div>
+
+    <canvas id="emiChart"></canvas>
+  </div>
+
+  <!-- AD SLOT -->
+  <div class="ad-slot">Advertisement</div>
+
+  <!-- SEO CONTENT -->
+  <h2>What is EMI?</h2>
+  <p>
+    EMI (Equated Monthly Installment) is the fixed monthly payment
+    you make to repay a loan. It consists of both principal and interest.
+  </p>
+
+  <h2>How is EMI calculated?</h2>
+  <p>
+    EMI is calculated using the loan amount, annual interest rate,
+    and loan tenure. Although interest is quoted annually,
+    EMI is calculated on a monthly basis.
+  </p>
+
+  <h2>EMI Calculation Example</h2>
+  <p>
+    For a loan of ₹5,00,000 at 9% interest for 10 years,
+    this calculator shows your monthly EMI,
+    total interest payable, and total repayment amount.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Disclaimer:</strong> EMI values are indicative.
+    Actual EMI may vary based on lender terms and rounding methods.
+  </p>
+
+</div>
+
+<script>
+function calculateEMI() {
+  const loan = Number(document.getElementById("loan").value);
+  const annualRate = Number(document.getElementById("rate").value);
+  const years = Number(document.getElementById("years").value);
+
+  if (loan <= 0 || annualRate <= 0 || years <= 0) {
+    document.getElementById("emiResult").innerHTML =
+      "Please enter valid positive values.";
+    document.getElementById("interestResult").innerHTML = "";
+    document.getElementById("totalResult").innerHTML = "";
+    return;
+  }
+
+  const monthlyRate = annualRate / 100 / 12;
+  const months = years * 12;
+
+  const emi =
+    (loan * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+    (Math.pow(1 + monthlyRate, months) - 1);
+
+  const totalPayment = emi * months;
+  const totalInterest = totalPayment - loan;
+
+  document.getElementById("emiResult").innerHTML =
+    "Monthly EMI: ₹" + Math.round(emi).toLocaleString("en-IN");
+
+  document.getElementById("interestResult").innerHTML =
+    "Total Interest Payable: ₹" + Math.round(totalInterest).toLocaleString("en-IN");
+
+  document.getElementById("totalResult").innerHTML =
+    "Total Amount Payable: ₹" + Math.round(totalPayment).toLocaleString("en-IN");
+
+  drawChart(loan, monthlyRate, emi, years);
+}
+
+function drawChart(loan, rate, emi, years) {
+  const canvas = document.getElementById("emiChart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  let balance = loan;
+  let values = [balance];
+
+  for (let i = 1; i <= years; i++) {
+    balance = balance * Math.pow(1 + rate, 12) - emi * 12;
+    values.push(Math.max(balance, 0));
+  }
+
+  const max = loan;
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / years;
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  values.forEach((val, i) => {
+    const x = padding + i * stepX;
+    const y =
+      canvas.height - padding -
+      (val / max) * (canvas.height - padding * 2);
+
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+
+  ctx.fillStyle = "#555";
+  ctx.font = "12px Arial";
+  ctx.fillText("₹" + loan.toLocaleString("en-IN"), 6, padding);
+  ctx.fillText(years + " yrs", canvas.width - padding - 32, canvas.height - 8);
+}
+</script>
+
+</body>
+</html>
