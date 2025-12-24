@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- UNIQUE PER PAGE -->
-  <title>SIP Calculator – Monthly Investment Growth | SmartCalcs</title>
-  <meta name="description" content="Calculate SIP returns and view investment growth with a simple chart. Free SIP calculator by SmartCalcs.">
+  <!-- SEO -->
+  <title>SIP Calculator – Monthly Investment Returns | SmartCalcs</title>
+  <meta name="description" content="Calculate SIP returns with monthly investment, expected return, and duration. Free SIP calculator with growth chart and example.">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -113,97 +113,97 @@
 
 <div class="page">
 
-  <!-- ONE H1 ONLY -->
   <h1>SIP Calculator</h1>
 
   <p>
-    This SIP calculator helps you estimate the future value of your monthly SIP investments
-    using compound interest and shows growth over time.
+    This SIP calculator helps you estimate the future value of your monthly investments
+    using compound interest and visualizes your investment growth over time.
   </p>
 
   <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="monthly">Monthly Investment (₹)</label>
-    <input type="number" id="monthly" placeholder="e.g. 5000" aria-label="Monthly investment amount">
+    <input type="number" id="monthly" placeholder="e.g. 5000">
 
     <label for="rate">Expected Annual Return (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 12" aria-label="Expected annual return rate">
+    <input type="number" id="rate" placeholder="e.g. 12">
 
     <label for="years">Investment Duration (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 10" aria-label="Investment duration in years">
+    <input type="number" id="years" placeholder="e.g. 10">
 
-    <button onclick="calculate()">Calculate</button>
+    <button onclick="calculateSIP()">Calculate</button>
 
     <div class="result" id="result"></div>
     <div class="result" id="invested"></div>
 
     <canvas id="growthChart"></canvas>
-
   </div>
 
-  <!-- AD PLACEHOLDER -->
   <div class="ad-slot">Advertisement</div>
 
   <!-- SEO CONTENT -->
-  <h2>How SIP returns are calculated</h2>
+  <h2>How SIP Returns Are Calculated</h2>
   <p>
-    SIP returns are calculated using compound interest applied monthly.
-    Each monthly investment compounds for a different duration, resulting
-    in long-term wealth creation.
+    SIP returns are calculated by compounding each monthly investment.
+    Earlier investments grow longer, resulting in higher overall returns
+    compared to one-time investing.
   </p>
 
-  <h2>Example</h2>
+  <h2>SIP Example</h2>
   <p>
-    If you invest ₹5,000 every month for 10 years at an expected return of 12% per year,
-    the calculator estimates the final value and visualizes the growth trend.
+    If you invest ₹5,000 every month for 10 years at an expected annual return of 12%,
+    the total investment will be ₹6,00,000. The SIP calculator estimates the final
+    value based on monthly compounding.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
     <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
     <li><a href="emi-calculator.html">EMI Calculator</a></li>
-    <li><a href="percentage-calculator.html">Percentage Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are estimates only and provided for informational purposes.
-    Actual returns may vary based on market conditions.
+    <strong>Note:</strong> SIP returns are market-linked and subject to fluctuations.
+    This calculator provides estimated results only.
   </p>
 
 </div>
 
 <script>
-function calculate() {
-  const P = Number(document.getElementById("monthly").value);
-  const rate = Number(document.getElementById("rate").value) / 100 / 12;
+function calculateSIP() {
+  const monthly = Number(document.getElementById("monthly").value);
+  const annualRate = Number(document.getElementById("rate").value);
   const years = Number(document.getElementById("years").value);
 
-  if (P <= 0 || years <= 0 || rate < 0) {
+  if (monthly <= 0 || annualRate <= 0 || years <= 0) {
     document.getElementById("result").innerHTML =
       "Please enter valid positive values.";
     document.getElementById("invested").innerHTML = "";
     return;
   }
 
-  let values = [];
-  let months = years * 12;
+  const rate = annualRate / 100 / 12;
+  const months = years * 12;
+
   let total = 0;
+  let yearlyValues = [];
 
   for (let i = 1; i <= months; i++) {
-    total = (total + P) * (1 + rate);
-    if (i % 12 === 0) values.push(Math.round(total));
+    total = (total + monthly) * (1 + rate);
+    if (i % 12 === 0) yearlyValues.push(Math.round(total));
   }
 
-  const investedAmount = P * months;
+  const investedAmount = monthly * months;
 
   document.getElementById("result").innerHTML =
-    "Estimated Value: ₹" + values[values.length - 1].toLocaleString("en-IN");
+    "Estimated Value: ₹" + yearlyValues[yearlyValues.length - 1].toLocaleString("en-IN");
 
   document.getElementById("invested").innerHTML =
     "Total Invested: ₹" + investedAmount.toLocaleString("en-IN");
 
-  drawChart(values);
+  drawChart(yearlyValues);
 }
 
 function drawChart(data) {
@@ -233,24 +233,10 @@ function drawChart(data) {
 
   ctx.stroke();
 
-  // Axis labels
   ctx.fillStyle = "#555";
   ctx.font = "12px Arial";
-
-  // Y-axis max value
-  ctx.fillText(
-    "₹" + max.toLocaleString("en-IN"),
-    6,
-    padding
-  );
-
-  // X-axis labels
-  ctx.fillText("0", padding, canvas.height - 8);
-  ctx.fillText(
-    data.length + " yrs",
-    canvas.width - padding - 30,
-    canvas.height - 8
-  );
+  ctx.fillText("₹" + max.toLocaleString("en-IN"), 6, padding);
+  ctx.fillText(data.length + " yrs", canvas.width - padding - 40, canvas.height - 8);
 }
 </script>
 
