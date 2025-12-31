@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <!-- SEO -->
-  <title>FD Calculator – Fixed Deposit Interest & Maturity Amount | SmartCalcs</title>
-  <meta name="description" content="Free FD calculator to calculate fixed deposit maturity amount and interest earned based on principal, interest rate, tenure and compounding frequency.">
-
+  <!-- UNIQUE PER PAGE -->
+  <title>FD Calculator – Fixed Deposit Maturity Value | SmartCalcs</title>
+  <meta name="description" content="Calculate fixed deposit maturity value and interest earned using SmartCalcs FD Calculator.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -17,6 +15,28 @@
       color: #222;
     }
 
+    .site-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .site-header .inner {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-header a {
+      text-decoration: none;
+      color: #0b5ed7;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
     .page {
       max-width: 760px;
       margin: auto;
@@ -24,25 +44,34 @@
     }
 
     h1 {
-      font-size: 26px;
-      margin-bottom: 6px;
+      font-size: 24px;
+      margin-bottom: 8px;
     }
 
     h2 {
       font-size: 18px;
-      margin-top: 32px;
+      margin-top: 30px;
     }
 
     p {
       font-size: 15px;
-      line-height: 1.65;
+      line-height: 1.6;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
     }
 
     .calc-box {
       border: 1px solid #ddd;
       padding: 16px;
-      margin-top: 16px;
-      border-radius: 6px;
+      margin-top: 15px;
     }
 
     label {
@@ -52,9 +81,9 @@
       font-size: 14px;
     }
 
-    input, select {
+    input {
       width: 100%;
-      padding: 9px;
+      padding: 8px;
       margin-top: 5px;
       font-size: 15px;
       box-sizing: border-box;
@@ -62,14 +91,13 @@
 
     button {
       width: 100%;
-      margin-top: 18px;
-      padding: 11px;
-      font-size: 16px;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 15px;
       background: #0b5ed7;
       color: #fff;
       border: none;
       cursor: pointer;
-      border-radius: 4px;
     }
 
     button:hover {
@@ -77,21 +105,14 @@
     }
 
     .result {
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 16px;
       font-weight: bold;
     }
 
-    canvas {
-      margin-top: 20px;
-      width: 100%;
-      max-height: 260px;
-      display: none;
-    }
-
     .ad-slot {
-      margin: 34px 0;
-      padding: 12px;
+      margin: 30px 0;
+      padding: 10px;
       border: 1px dashed #ccc;
       text-align: center;
       font-size: 13px;
@@ -106,154 +127,111 @@
     .note {
       font-size: 13px;
       color: #555;
-      margin-top: 32px;
+      margin-top: 30px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
     }
   </style>
 </head>
 
 <body>
 
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
 <div class="page">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › FD Calculator
+  </div>
 
   <h1>FD Calculator</h1>
 
   <p>
-    Use this FD calculator to estimate the maturity amount and interest earned
-    on your fixed deposit based on investment amount, interest rate,
-    tenure and compounding frequency.
+    This FD calculator helps you calculate the maturity value and interest
+    earned on a fixed deposit investment.
   </p>
 
-  <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="principal">Deposit Amount (₹)</label>
-    <input type="number" id="principal" placeholder="e.g. 100000" min="1">
+    <input type="number" id="principal" placeholder="e.g. 100000">
 
     <label for="rate">Annual Interest Rate (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 7" min="0.1" step="0.01">
+    <input type="number" id="rate" placeholder="e.g. 6.5">
 
     <label for="years">Tenure (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 5" min="1">
+    <input type="number" id="years" placeholder="e.g. 3">
 
-    <label for="frequency">Compounding Frequency</label>
-    <select id="frequency">
-      <option value="1">Yearly</option>
-      <option value="2">Half-Yearly</option>
-      <option value="4">Quarterly</option>
-      <option value="12">Monthly</option>
-    </select>
+    <button onclick="calculate()">Calculate</button>
 
-    <button onclick="calculateFD()">Calculate FD</button>
+    <div class="result" id="result"></div>
+    <div class="result" id="interest"></div>
 
-    <div class="result" id="maturityResult"></div>
-    <div class="result" id="interestResult"></div>
-
-    <canvas id="fdChart"></canvas>
   </div>
 
   <div class="ad-slot">Advertisement</div>
 
-  <!-- SEO CONTENT -->
-  <h2>What is a Fixed Deposit?</h2>
+  <h2>How FD returns are calculated</h2>
   <p>
-    A Fixed Deposit (FD) is a safe investment option where you deposit a
-    lump sum amount for a fixed tenure at a predetermined interest rate.
-    The interest is compounded periodically.
-  </p>
-
-  <h2>How FD Interest is Calculated</h2>
-  <p>
-    FD maturity amount is calculated using compound interest.
-    Higher compounding frequency results in higher maturity value.
-  </p>
-
-  <h2>FD Calculation Example</h2>
-  <p>
-    If you invest ₹1,00,000 at 7% interest for 5 years with quarterly compounding,
-    this FD calculator estimates your maturity amount and total interest earned.
+    Fixed deposit returns are calculated using compound interest, usually
+    compounded annually unless specified otherwise by the bank.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
     <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
     <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
-    <li><a href="rd-calculator.html">RD Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Disclaimer:</strong> FD returns are indicative.
-    Actual returns may vary depending on bank policies and compounding rules.
+    <strong>Note:</strong> Actual FD returns may vary based on bank policies and compounding frequency.
   </p>
 
 </div>
 
-<script>
-function calculateFD() {
-  const principal = Number(document.getElementById("principal").value);
-  const rate = Number(document.getElementById("rate").value);
-  const years = Number(document.getElementById("years").value);
-  const freq = Number(document.getElementById("frequency").value);
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
 
-  if (principal <= 0 || rate <= 0 || years <= 0) {
-    document.getElementById("maturityResult").innerHTML =
-      "Please enter valid positive values.";
-    document.getElementById("interestResult").innerHTML = "";
+<script>
+function calculate() {
+  const P = Number(document.getElementById("principal").value);
+  const r = Number(document.getElementById("rate").value) / 100;
+  const t = Number(document.getElementById("years").value);
+
+  if (P <= 0 || r <= 0 || t <= 0) {
+    document.getElementById("result").innerHTML = "Please enter valid values.";
+    document.getElementById("interest").innerHTML = "";
     return;
   }
 
-  const r = rate / 100;
-  const maturity =
-    principal * Math.pow(1 + r / freq, freq * years);
+  const maturity = P * Math.pow(1 + r, t);
+  const interestEarned = maturity - P;
 
-  const interest = maturity - principal;
+  document.getElementById("result").innerHTML =
+    "Maturity Value: ₹" + Math.round(maturity).toLocaleString("en-IN");
 
-  document.getElementById("maturityResult").innerHTML =
-    "Maturity Amount: ₹" + Math.round(maturity).toLocaleString("en-IN");
-
-  document.getElementById("interestResult").innerHTML =
-    "Total Interest Earned: ₹" + Math.round(interest).toLocaleString("en-IN");
-
-  drawChart(principal, maturity, years);
-}
-
-function drawChart(principal, maturity, years) {
-  const canvas = document.getElementById("fdChart");
-  const ctx = canvas.getContext("2d");
-  canvas.style.display = "block";
-
-  canvas.width = canvas.offsetWidth;
-  canvas.height = 260;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  const values = [];
-  for (let i = 0; i <= years; i++) {
-    values.push(principal + ((maturity - principal) / years) * i);
-  }
-
-  const max = maturity;
-  const padding = 30;
-  const stepX = (canvas.width - padding * 2) / years;
-
-  ctx.beginPath();
-  ctx.strokeStyle = "#0b5ed7";
-  ctx.lineWidth = 2;
-
-  values.forEach((val, i) => {
-    const x = padding + i * stepX;
-    const y =
-      canvas.height - padding -
-      (val / max) * (canvas.height - padding * 2);
-
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-
-  ctx.stroke();
-
-  ctx.fillStyle = "#555";
-  ctx.font = "12px Arial";
-  ctx.fillText("₹" + Math.round(max).toLocaleString("en-IN"), 6, padding);
-  ctx.fillText(years + " yrs", canvas.width - padding - 32, canvas.height - 8);
+  document.getElementById("interest").innerHTML =
+    "Interest Earned: ₹" + Math.round(interestEarned).toLocaleString("en-IN");
 }
 </script>
 
