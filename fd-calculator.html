@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
 
   <!-- UNIQUE PER PAGE -->
-  <title>FD Calculator – Fixed Deposit Returns | SmartCalcs</title>
-  <meta name="description" content="Calculate fixed deposit maturity amount using compound interest. Free FD calculator by SmartCalcs.">
+  <title>FD Calculator – Fixed Deposit Maturity Value | SmartCalcs</title>
+  <meta name="description" content="Calculate Fixed Deposit maturity value and interest earned using our free FD calculator. Simple, fast and accurate.">
 
   <!-- CANONICAL -->
   <link rel="canonical" href="https://smartcalcs.github.io/fd-calculator.html">
@@ -86,7 +86,7 @@
       font-size: 14px;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
@@ -113,13 +113,6 @@
       margin-top: 12px;
       font-size: 16px;
       font-weight: bold;
-    }
-
-    canvas {
-      margin-top: 20px;
-      width: 100%;
-      max-height: 260px;
-      display: none;
     }
 
     .ad-slot {
@@ -176,8 +169,8 @@
   <h1>FD Calculator</h1>
 
   <p>
-    This FD calculator helps you estimate the maturity amount of a fixed deposit
-    using compound interest and shows year-wise growth.
+    This Fixed Deposit (FD) calculator helps you calculate the maturity value and
+    interest earned on your lump sum deposit using compound interest.
   </p>
 
   <div class="calc-box">
@@ -185,53 +178,58 @@
     <label for="principal">Deposit Amount (₹)</label>
     <input type="number" id="principal" placeholder="e.g. 100000">
 
-    <label for="rate">Interest Rate (% per annum)</label>
+    <label for="rate">Annual Interest Rate (%)</label>
     <input type="number" id="rate" placeholder="e.g. 6.5">
 
-    <label for="years">Tenure (Years)</label>
+    <label for="years">Investment Duration (Years)</label>
     <input type="number" id="years" placeholder="e.g. 5">
 
-    <button onclick="calculate()">Calculate</button>
+    <label for="frequency">Compounding Frequency</label>
+    <select id="frequency">
+      <option value="1">Yearly</option>
+      <option value="4">Quarterly</option>
+      <option value="12">Monthly</option>
+    </select>
 
-    <div class="result" id="result"></div>
+    <button onclick="calculateFD()">Calculate</button>
 
-    <canvas id="growthChart"></canvas>
+    <div class="result" id="maturity"></div>
+    <div class="result" id="interest"></div>
   </div>
 
   <div class="ad-slot">Advertisement</div>
 
-  <h2>How FD returns are calculated</h2>
-  <p>
-    Fixed deposit returns are calculated using compound interest, where the principal
-    amount earns interest over a fixed tenure at a predetermined rate.
-  </p>
-
   <h2>FD Formula</h2>
   <p>
-    <strong>A = P × (1 + r)<sup>n</sup></strong>
+    The maturity value of a fixed deposit is calculated using the compound interest formula:
+  </p>
+  <p>
+    <strong>A = P × (1 + r / n)<sup>n × t</sup></strong>
   </p>
   <p>
     Where:<br>
     P = Principal amount<br>
-    r = Annual interest rate (÷ 100)<br>
-    n = Number of years
+    r = Annual interest rate (in decimal)<br>
+    n = Compounding frequency per year<br>
+    t = Time in years
   </p>
 
   <h2>Example</h2>
   <p>
-    Depositing ₹1,00,000 for 5 years at an interest rate of 6.5%
-    shows how fixed deposits grow safely over time.
+    If you invest ₹1,00,000 in a fixed deposit for 5 years at an interest rate of 6.5%
+    compounded quarterly, the maturity amount will be approximately ₹1,37,000.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
+    <li><a href="rd-calculator.html">RD Calculator</a></li>
     <li><a href="sip-calculator.html">SIP Calculator</a></li>
-    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
-    <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> FD interest rates may vary across banks and tenures.
+    <strong>Note:</strong> FD returns vary based on bank policies and compounding frequency.
+    This calculator provides estimated values only.
   </p>
 
 </div>
@@ -242,55 +240,26 @@
 </footer>
 
 <script>
-function calculate() {
+function calculateFD() {
   const P = Number(document.getElementById("principal").value);
   const rate = Number(document.getElementById("rate").value) / 100;
   const years = Number(document.getElementById("years").value);
+  const n = Number(document.getElementById("frequency").value);
 
-  if (P <= 0 || years <= 0 || rate < 0) {
-    document.getElementById("result").innerHTML = "Please enter valid values.";
+  if (P <= 0 || rate <= 0 || years <= 0) {
+    document.getElementById("maturity").innerHTML = "Please enter valid values.";
+    document.getElementById("interest").innerHTML = "";
     return;
   }
 
-  let values = [];
-  let total = P;
+  const A = P * Math.pow(1 + rate / n, n * years);
+  const interestEarned = A - P;
 
-  for (let i = 1; i <= years; i++) {
-    total = total * (1 + rate);
-    values.push(Math.round(total));
-  }
+  document.getElementById("maturity").innerHTML =
+    "Maturity Value: ₹" + Math.round(A).toLocaleString("en-IN");
 
-  document.getElementById("result").innerHTML =
-    "Maturity Amount: ₹" + values.at(-1).toLocaleString("en-IN");
-
-  drawChart(values);
-}
-
-function drawChart(data) {
-  const canvas = document.getElementById("growthChart");
-  const ctx = canvas.getContext("2d");
-  canvas.style.display = "block";
-
-  canvas.width = canvas.offsetWidth;
-  canvas.height = 260;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  const max = Math.max(...data);
-  const padding = 30;
-  const stepX = (canvas.width - padding * 2) / (data.length - 1);
-
-  ctx.beginPath();
-  ctx.strokeStyle = "#0b5ed7";
-  ctx.lineWidth = 2;
-
-  data.forEach((val, i) => {
-    const x = padding + i * stepX;
-    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-
-  ctx.stroke();
+  document.getElementById("interest").innerHTML =
+    "Interest Earned: ₹" + Math.round(interestEarned).toLocaleString("en-IN");
 }
 </script>
 
