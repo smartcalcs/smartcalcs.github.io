@@ -14,6 +14,14 @@
   </url>
 
   <url>
+    <loc>https://smartcalcs.github.io/lumpsum-calculator.html</loc>
+  </url>
+
+  <url>
+    <loc>https://smartcalcs.github.io/cagr-calculator.html</loc>
+  </url>
+
+  <url>
     <loc>https://smartcalcs.github.io/fd-calculator.html</loc>
   </url>
 
@@ -22,7 +30,7 @@
   </url>
 
   <url>
-    <loc>https://smartcalcs.github.io/cagr-calculator.html</loc>
+    <loc>https://smartcalcs.github.io/percentage-calculator.html</loc>
   </url>
 
 </urlset>
