@@ -1,304 +1,255 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8">    <title>SIP Calculator – Monthly Investment Growth | SmartCalcs</title>  
+  <meta name="description" content="Calculate SIP returns and visualize long-term investment growth using compound interest with this SIP calculator.">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">    <!-- CANONICAL (update domain later) -->    <!-- <link rel="canonical" href="https://yourdomain.com/sip-calculator.html"> -->    <style>  
+    body {  
+      margin: 0;  
+      font-family: Arial, Helvetica, sans-serif;  
+      background: #ffffff;  
+      color: #222;  
+    }  
+  
+    /* HEADER */  
+    .site-header {  
+      background: #f8f9fa;  
+      border-bottom: 1px solid #ddd;  
+      padding: 12px 0;  
+    }  
+  
+    .site-header .inner {  
+      max-width: 760px;  
+      margin: auto;  
+      padding: 0 18px;  
+      display: flex;  
+      justify-content: space-between;  
+      align-items: center;  
+    }  
+  
+    .site-header a {  
+      text-decoration: none;  
+      color: #0b5ed7;  
+      font-weight: bold;  
+      font-size: 16px;  
+    }  
+  
+    main {  
+      max-width: 760px;  
+      margin: auto;  
+      padding: 18px;  
+    }  
+  
+    h1 {  
+      font-size: 24px;  
+      margin-bottom: 8px;  
+    }  
+  
+    h2 {  
+      font-size: 18px;  
+      margin-top: 32px;  
+    }  
+  
+    p {  
+      font-size: 15px;  
+      line-height: 1.6;  
+    }  
+  
+    .breadcrumb {  
+      font-size: 13px;  
+      margin-bottom: 12px;  
+    }  
+  
+    .breadcrumb a {  
+      color: #0b5ed7;  
+      text-decoration: none;  
+    }  
+  
+    .calc-box {  
+      border: 1px solid #ddd;  
+      padding: 16px;  
+      margin-top: 15px;  
+      border-radius: 4px;  
+    }  
+  
+    label {  
+      display: block;  
+      font-weight: bold;  
+      margin-top: 12px;  
+      font-size: 14px;  
+    }  
+  
+    input {  
+      width: 100%;  
+      padding: 8px;  
+      margin-top: 5px;  
+      font-size: 15px;  
+      box-sizing: border-box;  
+    }  
+  
+    button {  
+      width: 100%;  
+      margin-top: 15px;  
+      padding: 10px;  
+      font-size: 15px;  
+      background: #0b5ed7;  
+      color: #fff;  
+      border: none;  
+      cursor: pointer;  
+      border-radius: 4px;  
+    }  
+  
+    button:hover {  
+      background: #084298;  
+    }  
+  
+    .result-box {  
+      margin-top: 14px;  
+      padding: 12px;  
+      background: #f8f9fa;  
+      border-radius: 4px;  
+      font-size: 15px;  
+    }  
+  
+    canvas {  
+      margin-top: 20px;  
+      width: 100%;  
+      max-height: 260px;  
+      display: none;  
+    }  
+  
+    ul {  
+      padding-left: 18px;  
+      font-size: 14px;  
+    }  
+  
+    .note {  
+      font-size: 13px;  
+      color: #555;  
+      margin-top: 30px;  
+    }  
+  
+    footer {  
+      margin-top: 50px;  
+      padding: 15px 0;  
+      border-top: 1px solid #ddd;  
+      font-size: 13px;  
+      text-align: center;  
+    }  
+  
+    footer a {  
+      color: #0b5ed7;  
+      text-decoration: none;  
+      margin: 0 8px;  
+    }  
+  </style>  </head>  <body>  <header class="site-header">  
+  <div class="inner">  
+    <a href="index.html">SmartCalcs</a>  
+    <a href="index.html">Home</a>  
+  </div>  
+</header>  <main>    <nav class="breadcrumb">  
+    <a href="index.html">Home</a> › SIP Calculator  
+  </nav>    <h1>SIP Calculator</h1>    <p>  
+    This SIP calculator helps you estimate the future value of your monthly  
+    investments and visualize how compounding grows wealth over time.  
+  </p>    <section class="calc-box">  <label for="monthly">Monthly Investment</label>  
+<input type="number" id="monthly" min="1" step="1" placeholder="e.g. 5000" aria-label="Monthly investment amount">  
 
-  <title>SIP Calculator – Monthly Investment Growth | SmartCalcs</title>
-  <meta name="description" content="Calculate SIP returns and view investment growth with a simple chart. Free SIP calculator by SmartCalcs.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<label for="rate">Expected Annual Return (%)</label>  
+<input type="number" id="rate" min="0" step="0.1" placeholder="e.g. 12" aria-label="Expected annual return">  
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #ffffff;
-      color: #222;
-    }
+<label for="years">Investment Duration (Years)</label>  
+<input type="number" id="years" min="1" step="1" placeholder="e.g. 10" aria-label="Investment duration in years">  
 
-    /* HEADER */
-    header {
-      background: #f8f9fa;
-      border-bottom: 1px solid #ddd;
-    }
+<button type="button" onclick="calculateSIP()">Calculate</button>  
 
-    header .inner {
-      max-width: 760px;
-      margin: auto;
-      padding: 12px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+<div class="result-box" id="results"></div>  
 
-    header a {
-      text-decoration: none;
-      color: #0b5ed7;
-      font-weight: bold;
-      font-size: 16px;
-    }
+<canvas id="growthChart" aria-hidden="true"></canvas>
 
-    main {
-      max-width: 760px;
-      margin: auto;
-      padding: 18px;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    h2 {
-      font-size: 18px;
-      margin-top: 32px;
-    }
-
-    p {
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    nav.breadcrumb {
-      font-size: 13px;
-      margin-bottom: 12px;
-    }
-
-    nav.breadcrumb a {
-      color: #0b5ed7;
-      text-decoration: none;
-    }
-
-    .calc-box {
-      border: 1px solid #ddd;
-      padding: 16px;
-      margin-top: 16px;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 12px;
-      font-size: 14px;
-    }
-
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      font-size: 15px;
-      box-sizing: border-box;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 16px;
-      padding: 10px;
-      font-size: 15px;
-      background: #0b5ed7;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #084298;
-    }
-
-    .results-primary {
-      margin-top: 14px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .results-secondary {
-      margin-top: 6px;
-      font-size: 14px;
-      color: #444;
-    }
-
-    .trust {
-      margin-top: 8px;
-      font-size: 12px;
-      color: #666;
-    }
-
-    canvas {
-      margin-top: 22px;
-      width: 100%;
-      max-height: 260px;
-      display: none;
-    }
-
-    .ad-slot {
-      margin: 32px 0;
-      padding: 12px;
-      border: 1px dashed #ccc;
-      text-align: center;
-      font-size: 13px;
-      color: #666;
-    }
-
-    ul {
-      padding-left: 18px;
-      font-size: 14px;
-    }
-
-    footer {
-      margin-top: 50px;
-      padding-top: 15px;
-      border-top: 1px solid #ddd;
-      font-size: 13px;
-      text-align: center;
-      color: #555;
-    }
-
-    footer a {
-      color: #0b5ed7;
-      text-decoration: none;
-      margin: 0 8px;
-    }
-  </style>
-</head>
-
-<body>
-
-<header>
-  <div class="inner">
-    <a href="index.html">SmartCalcs</a>
-    <a href="index.html">Home</a>
-  </div>
-</header>
-
-<main>
-
-  <nav class="breadcrumb">
-    <a href="index.html">Home</a> › SIP Calculator
-  </nav>
-
-  <h1>SIP Calculator</h1>
-
-  <p>
-    Estimate the future value of your monthly SIP investments and understand
-    how compounding grows wealth over time.
-  </p>
-
-  <!-- CALCULATOR -->
-  <section class="calc-box">
-
-    <label for="monthly">Monthly Investment (₹)</label>
-    <input type="number" id="monthly" placeholder="e.g. 5000">
-
-    <label for="rate">Expected Annual Return (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 12">
-
-    <label for="years">Investment Duration (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 10">
-
-    <button onclick="calculate()">Calculate</button>
-
-    <div id="primaryResult" class="results-primary"></div>
-    <div id="secondaryResult" class="results-secondary"></div>
-
-    <div class="trust">
-      ✔ Instant calculation · ✔ No signup · ✔ Free to use
-    </div>
-
-    <canvas id="growthChart"></canvas>
-
-  </section>
-
-  <!-- AD (after intent satisfied) -->
-  <div class="ad-slot">Advertisement</div>
-
-  <!-- SEO CONTENT -->
-  <section>
-    <h2>How SIP returns are calculated</h2>
-    <p>
-      SIP returns are calculated using monthly compounding.
-      Each installment earns returns for a different duration, creating
-      exponential growth over long periods.
-    </p>
-
-    <h2>Example</h2>
-    <p>
-      Investing ₹5,000 per month for 10 years at 12% annual returns
-      demonstrates the power of disciplined investing.
-    </p>
-  </section>
-
-  <section>
-    <h2>Related Calculators</h2>
-    <ul>
-      <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
-      <li><a href="emi-calculator.html">EMI Calculator</a></li>
-      <li><a href="percentage-calculator.html">Percentage Calculator</a></li>
-    </ul>
-  </section>
-
-</main>
-
-<footer>
-  <a href="index.html">Home</a> |
-  <span>© 2025 SmartCalcs</span>
-</footer>
-
-<script>
-function calculate() {
-  const P = Number(document.getElementById("monthly").value);
-  const rate = Number(document.getElementById("rate").value) / 100 / 12;
-  const years = Number(document.getElementById("years").value);
-
-  if (P <= 0 || years <= 0 || rate < 0) {
-    document.getElementById("primaryResult").textContent = "Please enter valid values.";
-    document.getElementById("secondaryResult").textContent = "";
-    return;
-  }
-
-  const months = years * 12;
-  let total = 0;
-  let yearlyValues = [];
-
-  for (let i = 1; i <= months; i++) {
-    total = (total + P) * (1 + rate);
-    if (i % 12 === 0) yearlyValues.push(Math.round(total));
-  }
-
-  document.getElementById("primaryResult").textContent =
-    "Estimated Value: ₹" + yearlyValues.at(-1).toLocaleString("en-IN");
-
-  document.getElementById("secondaryResult").textContent =
-    "Total Invested: ₹" + (P * months).toLocaleString("en-IN");
-
-  drawChart(yearlyValues);
-}
-
-function drawChart(data) {
-  const canvas = document.getElementById("growthChart");
-  const ctx = canvas.getContext("2d");
-
-  canvas.style.display = "block";
-  canvas.width = canvas.offsetWidth;
-  canvas.height = 260;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  const max = Math.max(...data);
-  const padding = 30;
-  const stepX = (canvas.width - padding * 2) / (data.length - 1);
-
-  ctx.beginPath();
-  ctx.strokeStyle = "#0b5ed7";
-  ctx.lineWidth = 2;
-
-  data.forEach((val, i) => {
-    const x = padding + i * stepX;
-    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-
-  ctx.stroke();
-}
-</script>
-
-</body>
+  </section>    <h2>How SIP Returns Are Calculated</h2>  
+  <p>  
+    SIP returns are calculated using monthly compounding.  
+    Each installment earns returns for a different duration, leading  
+    to exponential growth over the long term.  
+  </p>    <h2>Related Calculators</h2>  
+  <ul>  
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>  
+    <li><a href="cagr-calculator.html">CAGR Calculator</a></li>  
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>  
+  </ul>    <p class="note">  
+    <strong>Disclaimer:</strong> Results are indicative and for educational purposes only.  
+    Market returns may vary.  
+  </p>  </main>  <footer>  
+  <a href="index.html">Home</a> |  
+  <span>© <span id="year"></span> SmartCalcs</span>  
+</footer>  <script>  
+document.getElementById("year").textContent = new Date().getFullYear();  
+  
+function calculateSIP() {  
+  const monthly = Number(document.getElementById("monthly").value);  
+  const annualRate = Number(document.getElementById("rate").value);  
+  const years = Number(document.getElementById("years").value);  
+  
+  const results = document.getElementById("results");  
+  const chart = document.getElementById("growthChart");  
+  
+  results.textContent = "";  
+  chart.style.display = "none";  
+  
+  if (monthly <= 0 || annualRate < 0 || years <= 0) {  
+    results.textContent = "Please enter valid positive values.";  
+    return;  
+  }  
+  
+  const rate = annualRate / 100 / 12;  
+  const months = years * 12;  
+  
+  let total = 0;  
+  let yearlyValues = [];  
+  
+  for (let i = 1; i <= months; i++) {  
+    total = (total + monthly) * (1 + rate);  
+    if (i % 12 === 0) yearlyValues.push(Math.round(total));  
+  }  
+  
+  const invested = monthly * months;  
+  const gains = total - invested;  
+  
+  results.innerHTML =  
+    "Total Invested: ₹" + invested.toLocaleString("en-IN") +  
+    "<br>Estimated Value: ₹" + Math.round(total).toLocaleString("en-IN") +  
+    "<br>Total Gains: ₹" + Math.round(gains).toLocaleString("en-IN");  
+  
+  drawChart(yearlyValues);  
+}  
+  
+function drawChart(data) {  
+  if (data.length < 2) return;  
+  
+  const canvas = document.getElementById("growthChart");  
+  const ctx = canvas.getContext("2d");  
+  
+  canvas.style.display = "block";  
+  canvas.width = canvas.offsetWidth;  
+  canvas.height = 260;  
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);  
+  
+  const max = Math.max(...data);  
+  const padding = 30;  
+  const stepX = (canvas.width - padding * 2) / (data.length - 1);  
+  
+  ctx.beginPath();  
+  ctx.strokeStyle = "#0b5ed7";  
+  ctx.lineWidth = 2;  
+  
+  data.forEach((val, i) => {  
+    const x = padding + i * stepX;  
+    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);  
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);  
+  });  
+  
+  ctx.stroke();  
+}  
+</script>  </body>  
 </html>
