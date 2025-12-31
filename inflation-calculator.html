@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>Inflation Calculator – Adjust Value Over Time | SmartCalcs</title>
+  <meta name="description" content="Calculate the future or past value of money after inflation. Free Inflation Calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/inflation-calculator.html">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    .site-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .site-header .inner {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-header a {
+      text-decoration: none;
+      color: #0b5ed7;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 15px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .ad-slot {
+      margin: 30px 0;
+      padding: 10px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › Inflation Calculator
+  </div>
+
+  <h1>Inflation Calculator</h1>
+
+  <p>
+    This inflation calculator helps you estimate how the value of money changes over time
+    due to inflation.
+  </p>
+
+  <div class="calc-box">
+
+    <label for="amount">Current Amount (₹)</label>
+    <input type="number" id="amount" placeholder="e.g. 100000">
+
+    <label for="rate">Annual Inflation Rate (%)</label>
+    <input type="number" id="rate" placeholder="e.g. 6">
+
+    <label for="years">Time Period (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 10">
+
+    <button onclick="calculateInflation()">Calculate</button>
+
+    <div class="result" id="futureValue"></div>
+    <div class="result" id="lossValue"></div>
+
+  </div>
+
+  <div class="ad-slot">Advertisement</div>
+
+  <h2>How inflation affects money</h2>
+  <p>
+    Inflation reduces the purchasing power of money over time.
+    As prices rise, the same amount of money buys fewer goods and services.
+  </p>
+
+  <h2>Inflation Formula</h2>
+  <p>
+    <strong>FV = P × (1 + r)<sup>t</sup></strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Current amount<br>
+    r = Annual inflation rate (decimal)<br>
+    t = Time in years
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    If inflation is 6% per year, ₹1,00,000 today will have the purchasing power
+    of approximately ₹55,800 after 10 years.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="compound-interest-calculator.html">Compound Interest Calculator</a></li>
+    <li><a href="fd-calculator.html">FD Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> This calculator provides estimates only. Actual inflation
+    rates may vary over time.
+  </p>
+
+</div>
+
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
+
+<script>
+function calculateInflation() {
+  const P = Number(document.getElementById("amount").value);
+  const R = Number(document.getElementById("rate").value) / 100;
+  const T = Number(document.getElementById("years").value);
+
+  if (P <= 0 || R <= 0 || T <= 0) {
+    document.getElementById("futureValue").innerHTML = "Please enter valid values.";
+    document.getElementById("lossValue").innerHTML = "";
+    return;
+  }
+
+  const futureValue = P / Math.pow(1 + R, T);
+  const loss = P - futureValue;
+
+  document.getElementById("futureValue").innerHTML =
+    "Future Purchasing Power: ₹" + Math.round(futureValue).toLocaleString("en-IN");
+
+  document.getElementById("lossValue").innerHTML =
+    "Loss in Value: ₹" + Math.round(loss).toLocaleString("en-IN");
+}
+</script>
+
+</body>
+</html>
