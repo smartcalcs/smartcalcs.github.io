@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <!-- UNIQUE PER PAGE -->
-  <title>EMI Calculator – Loan Monthly Installment | SmartCalcs</title>
-  <meta name="description" content="Calculate loan EMI, total interest, and repayment amount using SmartCalcs EMI Calculator.">
+  <title>EMI Calculator – Loan Monthly Payment | SmartCalcs</title>
+  <meta name="description" content="Calculate loan EMI easily using interest rate and tenure. Free EMI calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/emi-calculator.html">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -164,8 +169,8 @@
   <h1>EMI Calculator</h1>
 
   <p>
-    This EMI calculator helps you calculate your monthly loan installment,
-    total interest payable, and total repayment amount.
+    This EMI calculator helps you calculate your monthly loan installment based on
+    loan amount, interest rate, and tenure.
   </p>
 
   <div class="calc-box">
@@ -174,25 +179,40 @@
     <input type="number" id="loan" placeholder="e.g. 500000">
 
     <label for="rate">Annual Interest Rate (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 9">
+    <input type="number" id="rate" placeholder="e.g. 10">
 
     <label for="years">Loan Tenure (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 20">
+    <input type="number" id="years" placeholder="e.g. 5">
 
-    <button onclick="calculate()">Calculate</button>
+    <button onclick="calculate()">Calculate EMI</button>
 
     <div class="result" id="emi"></div>
     <div class="result" id="interest"></div>
     <div class="result" id="total"></div>
-
   </div>
 
   <div class="ad-slot">Advertisement</div>
 
   <h2>How EMI is calculated</h2>
   <p>
-    EMI is calculated using a standard loan amortization formula that considers
-    loan amount, interest rate, and tenure.
+    EMI (Equated Monthly Installment) consists of both principal and interest components
+    and remains constant throughout the loan tenure.
+  </p>
+
+  <h2>EMI Formula</h2>
+  <p>
+    <strong>EMI = P × r × (1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> − 1)</strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Loan amount<br>
+    r = Monthly interest rate (annual rate ÷ 12 ÷ 100)<br>
+    n = Total number of months
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    A ₹5,00,000 loan at 10% annual interest for 5 years results in a fixed monthly EMI.
   </p>
 
   <h2>Related Calculators</h2>
@@ -203,7 +223,7 @@
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> EMI results are indicative and may vary based on lender terms.
+    <strong>Note:</strong> EMI amounts are approximate and may vary slightly based on lender terms.
   </p>
 
 </div>
@@ -226,13 +246,10 @@ function calculate() {
     return;
   }
 
-  const r = annualRate / 12 / 100;
+  const r = annualRate / 100 / 12;
   const n = years * 12;
 
-  const emi =
-    (P * r * Math.pow(1 + r, n)) /
-    (Math.pow(1 + r, n) - 1);
-
+  const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
   const totalPayment = emi * n;
   const totalInterest = totalPayment - P;
 
@@ -243,7 +260,7 @@ function calculate() {
     "Total Interest: ₹" + Math.round(totalInterest).toLocaleString("en-IN");
 
   document.getElementById("total").innerHTML =
-    "Total Repayment: ₹" + Math.round(totalPayment).toLocaleString("en-IN");
+    "Total Payment: ₹" + Math.round(totalPayment).toLocaleString("en-IN");
 }
 </script>
 
