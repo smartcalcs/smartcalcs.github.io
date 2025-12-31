@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
 
   <!-- UNIQUE PER PAGE -->
-  <title>Percentage Calculator – Calculate Percentage Easily | SmartCalcs</title>
-  <meta name="description" content="Free percentage calculator to find percentage, percentage increase or decrease, and percentage values instantly. Simple and accurate.">
+  <title>Percentage Calculator – Find Percentage Value | SmartCalcs</title>
+  <meta name="description" content="Calculate percentages easily. Find X% of a number or calculate percentage increase and decrease using this percentage calculator.">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,6 +15,28 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #ffffff;
       color: #222;
+    }
+
+    .site-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .site-header .inner {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-header a {
+      text-decoration: none;
+      color: #0b5ed7;
+      font-weight: bold;
+      font-size: 16px;
     }
 
     .page {
@@ -38,6 +60,16 @@
       line-height: 1.6;
     }
 
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
+    }
+
     .calc-box {
       border: 1px solid #ddd;
       padding: 16px;
@@ -51,7 +83,7 @@
       font-size: 14px;
     }
 
-    input, select {
+    input {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
@@ -99,59 +131,74 @@
       color: #555;
       margin-top: 30px;
     }
+
+    footer {
+      margin-top: 50px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
+    }
   </style>
 </head>
 
 <body>
 
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
 <div class="page">
 
-  <!-- ONE H1 ONLY -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › Percentage Calculator
+  </div>
+
   <h1>Percentage Calculator</h1>
 
   <p>
-    This percentage calculator helps you calculate percentage values,
-    find what percent one number is of another, and calculate percentage
-    increase or decrease.
+    This percentage calculator helps you calculate percentages, including
+    finding a percentage of a number and calculating percentage increase or decrease.
   </p>
 
   <!-- CALCULATOR -->
   <div class="calc-box">
 
-    <label for="mode">Calculation Type</label>
-    <select id="mode" onchange="updateLabels(); clearResult();">
-      <option value="of">What is % of a number</option>
-      <option value="is">X is what % of Y</option>
-      <option value="change">Percentage Increase / Decrease</option>
-    </select>
+    <label for="percent">Percentage (%)</label>
+    <input type="number" id="percent" placeholder="e.g. 20">
 
-    <label id="label1" for="value">Value</label>
-    <input type="number" id="value" placeholder="e.g. 50" oninput="clearResult()">
+    <label for="number">Number</label>
+    <input type="number" id="number" placeholder="e.g. 500">
 
-    <label id="label2" for="percentage">Percentage (%)</label>
-    <input type="number" id="percentage" placeholder="e.g. 20" oninput="clearResult()">
-
-    <button onclick="calculate()">Calculate</button>
+    <button onclick="calculatePercentage()">Calculate</button>
 
     <div class="result" id="result"></div>
 
   </div>
 
-  <!-- AD PLACEHOLDER -->
+  <!-- AD -->
   <div class="ad-slot">Advertisement</div>
 
   <!-- SEO CONTENT -->
-  <h2>How percentage is calculated</h2>
+  <h2>How Percentage Calculation Works</h2>
   <p>
-    A percentage represents a number out of 100.
-    It is commonly used to compare values, calculate changes,
-    and understand proportions.
+    A percentage represents a fraction of 100. To calculate a percentage of a number,
+    multiply the number by the percentage and divide by 100.
   </p>
 
   <h2>Example</h2>
   <p>
-    20% of 50 equals 10.  
-    If a value increases from 50 to 60, the percentage increase is 20%.
+    Calculating 20% of 500 results in 100. Percentage calculations are commonly
+    used in finance, discounts, and data analysis.
   </p>
 
   <h2>Related Calculators</h2>
@@ -162,73 +209,31 @@
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are calculated instantly and may be rounded.
+    <strong>Note:</strong> Results are calculated mathematically and may be rounded.
   </p>
 
 </div>
 
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
+
 <script>
-function updateLabels() {
-  const mode = document.getElementById("mode").value;
-  const label1 = document.getElementById("label1");
-  const label2 = document.getElementById("label2");
+function calculatePercentage() {
+  const percent = Number(document.getElementById("percent").value);
+  const number = Number(document.getElementById("number").value);
 
-  if (mode === "of") {
-    label1.textContent = "Value";
-    label2.textContent = "Percentage (%)";
-  } else if (mode === "is") {
-    label1.textContent = "Value (X)";
-    label2.textContent = "Total Value (Y)";
-  } else {
-    label1.textContent = "Original Value";
-    label2.textContent = "New Value";
-  }
-}
-
-function clearResult() {
-  document.getElementById("result").innerHTML = "";
-}
-
-function calculate() {
-  const value = Number(document.getElementById("value").value);
-  const percentage = Number(document.getElementById("percentage").value);
-  const mode = document.getElementById("mode").value;
-
-  if (isNaN(value) || isNaN(percentage)) {
-    document.getElementById("result").innerHTML =
-      "Please enter valid numbers.";
+  if (isNaN(percent) || isNaN(number)) {
+    document.getElementById("result").innerHTML = "Please enter valid values.";
     return;
   }
 
-  let output = "";
+  const result = (percent / 100) * number;
 
-  if (mode === "of") {
-    const result = (value * percentage) / 100;
-    output = percentage + "% of " + value + " = " + result;
-
-  } else if (mode === "is") {
-    if (percentage === 0) {
-      output = "Total value cannot be zero.";
-    } else {
-      const result = (value / percentage) * 100;
-      output = value + " is " + result.toFixed(2) + "% of " + percentage;
-    }
-
-  } else if (mode === "change") {
-    if (value === 0) {
-      output = "Original value cannot be zero.";
-    } else {
-      const change = ((percentage - value) / value) * 100;
-      const type = change >= 0 ? "Increase" : "Decrease";
-      output = type + " of " + Math.abs(change).toFixed(2) + "%";
-    }
-  }
-
-  document.getElementById("result").innerHTML = output;
+  document.getElementById("result").innerHTML =
+    percent + "% of " + number + " = " + result;
 }
-
-// Initialize labels on load
-updateLabels();
 </script>
 
 </body>
