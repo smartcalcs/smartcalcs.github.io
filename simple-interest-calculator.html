@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>Simple Interest Calculator – Calculate SI Online | SmartCalcs</title>
+  <meta name="description" content="Calculate simple interest easily using principal, rate, and time. Free Simple Interest Calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/simple-interest-calculator.html">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    .site-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .site-header .inner {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-header a {
+      text-decoration: none;
+      color: #0b5ed7;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 15px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .ad-slot {
+      margin: 30px 0;
+      padding: 10px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › Simple Interest Calculator
+  </div>
+
+  <h1>Simple Interest Calculator</h1>
+
+  <p>
+    This simple interest calculator helps you calculate interest earned on a principal
+    amount over a fixed period at a given rate of interest.
+  </p>
+
+  <div class="calc-box">
+
+    <label for="principal">Principal Amount (₹)</label>
+    <input type="number" id="principal" placeholder="e.g. 100000">
+
+    <label for="rate">Rate of Interest (% per year)</label>
+    <input type="number" id="rate" placeholder="e.g. 8">
+
+    <label for="time">Time Period (Years)</label>
+    <input type="number" id="time" placeholder="e.g. 5">
+
+    <button onclick="calculateSI()">Calculate</button>
+
+    <div class="result" id="interest"></div>
+    <div class="result" id="total"></div>
+
+  </div>
+
+  <div class="ad-slot">Advertisement</div>
+
+  <h2>How Simple Interest is calculated</h2>
+  <p>
+    Simple interest is calculated only on the original principal amount.
+    Unlike compound interest, interest earned is not added back to the principal
+    for further interest calculation.
+  </p>
+
+  <h2>Simple Interest Formula</h2>
+  <p>
+    <strong>SI = (P × R × T) ÷ 100</strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Principal amount<br>
+    R = Rate of interest per year<br>
+    T = Time period in years
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    If you invest ₹1,00,000 at an interest rate of 8% per year for 5 years,
+    the simple interest earned will be ₹40,000 and the total amount will be ₹1,40,000.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="compound-interest-calculator.html">Compound Interest Calculator</a></li>
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="fd-calculator.html">FD Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> This calculator provides estimated results. Actual interest
+    may vary depending on financial institution terms.
+  </p>
+
+</div>
+
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
+
+<script>
+function calculateSI() {
+  const P = Number(document.getElementById("principal").value);
+  const R = Number(document.getElementById("rate").value);
+  const T = Number(document.getElementById("time").value);
+
+  if (P <= 0 || R <= 0 || T <= 0) {
+    document.getElementById("interest").innerHTML = "Please enter valid values.";
+    document.getElementById("total").innerHTML = "";
+    return;
+  }
+
+  const SI = (P * R * T) / 100;
+  const total = P + SI;
+
+  document.getElementById("interest").innerHTML =
+    "Simple Interest: ₹" + SI.toLocaleString("en-IN");
+
+  document.getElementById("total").innerHTML =
+    "Total Amount: ₹" + total.toLocaleString("en-IN");
+}
+</script>
+
+</body>
+</html>
