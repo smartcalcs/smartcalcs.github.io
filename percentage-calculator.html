@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
 
   <!-- UNIQUE PER PAGE -->
-  <title>Percentage Calculator – Find Percentage Value | SmartCalcs</title>
-  <meta name="description" content="Calculate percentages easily. Find X% of a number or calculate percentage increase and decrease using this percentage calculator.">
+  <title>Percentage Calculator – Find Percent Values | SmartCalcs</title>
+  <meta name="description" content="Calculate percentages easily with this free percentage calculator. Find percent value, increase or decrease instantly.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/percentage-calculator.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -166,39 +169,40 @@
   <h1>Percentage Calculator</h1>
 
   <p>
-    This percentage calculator helps you calculate percentages, including
-    finding a percentage of a number and calculating percentage increase or decrease.
+    This percentage calculator helps you find what percentage one number is of another
+    and calculate percentage values quickly.
   </p>
 
-  <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="percent">Percentage (%)</label>
-    <input type="number" id="percent" placeholder="e.g. 20">
+    <input type="number" id="percent" placeholder="e.g. 25">
 
-    <label for="number">Number</label>
-    <input type="number" id="number" placeholder="e.g. 500">
+    <label for="number">Of Number</label>
+    <input type="number" id="number" placeholder="e.g. 200">
 
-    <button onclick="calculatePercentage()">Calculate</button>
+    <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result"></div>
-
   </div>
 
-  <!-- AD -->
   <div class="ad-slot">Advertisement</div>
 
-  <!-- SEO CONTENT -->
-  <h2>How Percentage Calculation Works</h2>
+  <h2>How percentage is calculated</h2>
   <p>
-    A percentage represents a fraction of 100. To calculate a percentage of a number,
-    multiply the number by the percentage and divide by 100.
+    A percentage represents a fraction of 100. It is commonly used to compare values,
+    calculate discounts, increases, and proportions.
+  </p>
+
+  <h2>Percentage Formula</h2>
+  <p>
+    <strong>Result = (Percentage ÷ 100) × Number</strong>
   </p>
 
   <h2>Example</h2>
   <p>
-    Calculating 20% of 500 results in 100. Percentage calculations are commonly
-    used in finance, discounts, and data analysis.
+    25% of 200 equals 50. This calculation is useful for finding discounts,
+    exam scores, or data comparisons.
   </p>
 
   <h2>Related Calculators</h2>
@@ -209,7 +213,7 @@
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are calculated mathematically and may be rounded.
+    <strong>Note:</strong> This calculator provides instant results with basic percentage logic.
   </p>
 
 </div>
@@ -220,11 +224,11 @@
 </footer>
 
 <script>
-function calculatePercentage() {
+function calculate() {
   const percent = Number(document.getElementById("percent").value);
   const number = Number(document.getElementById("number").value);
 
-  if (isNaN(percent) || isNaN(number)) {
+  if (percent < 0 || number < 0) {
     document.getElementById("result").innerHTML = "Please enter valid values.";
     return;
   }
