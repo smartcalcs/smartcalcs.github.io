@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://smartcalcs.github.io/</loc>
+  </url>
+
+  <url>
+    <loc>https://smartcalcs.github.io/sip-calculator.html</loc>
+  </url>
+
+  <url>
+    <loc>https://smartcalcs.github.io/emi-calculator.html</loc>
+  </url>
+
+  <url>
+    <loc>https://smartcalcs.github.io/fd-calculator.html</loc>
+  </url>
+
+  <url>
+    <loc>https://smartcalcs.github.io/rd-calculator.html</loc>
+  </url>
+
+  <url>
+    <loc>https://smartcalcs.github.io/cagr-calculator.html</loc>
+  </url>
+
+</urlset>
