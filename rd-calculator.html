@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- SEO -->
-  <title>RD Calculator – Recurring Deposit Maturity & Interest | SmartCalcs</title>
-  <meta name="description" content="Free RD calculator to calculate recurring deposit maturity amount and interest earned based on monthly deposit, interest rate and tenure.">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://yourdomain.com/rd-calculator.html">
+  <!-- UNIQUE PER PAGE -->
+  <title>RD Calculator – Recurring Deposit Maturity Amount | SmartCalcs</title>
+  <meta name="description" content="Calculate recurring deposit maturity amount with monthly investment and interest rate. Free RD calculator by SmartCalcs.">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,6 +17,28 @@
       color: #222;
     }
 
+    .site-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .site-header .inner {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-header a {
+      text-decoration: none;
+      color: #0b5ed7;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
     .page {
       max-width: 760px;
       margin: auto;
@@ -26,25 +46,34 @@
     }
 
     h1 {
-      font-size: 26px;
-      margin-bottom: 6px;
+      font-size: 24px;
+      margin-bottom: 8px;
     }
 
     h2 {
       font-size: 18px;
-      margin-top: 32px;
+      margin-top: 30px;
     }
 
     p {
       font-size: 15px;
-      line-height: 1.65;
+      line-height: 1.6;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
     }
 
     .calc-box {
       border: 1px solid #ddd;
       padding: 16px;
-      margin-top: 16px;
-      border-radius: 6px;
+      margin-top: 15px;
     }
 
     label {
@@ -56,7 +85,7 @@
 
     input {
       width: 100%;
-      padding: 9px;
+      padding: 8px;
       margin-top: 5px;
       font-size: 15px;
       box-sizing: border-box;
@@ -64,14 +93,13 @@
 
     button {
       width: 100%;
-      margin-top: 18px;
-      padding: 11px;
-      font-size: 16px;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 15px;
       background: #0b5ed7;
       color: #fff;
       border: none;
       cursor: pointer;
-      border-radius: 4px;
     }
 
     button:hover {
@@ -79,21 +107,14 @@
     }
 
     .result {
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 16px;
       font-weight: bold;
     }
 
-    canvas {
-      margin-top: 20px;
-      width: 100%;
-      max-height: 260px;
-      display: none;
-    }
-
     .ad-slot {
-      margin: 34px 0;
-      padding: 12px;
+      margin: 30px 0;
+      padding: 10px;
       border: 1px dashed #ccc;
       text-align: center;
       font-size: 13px;
@@ -108,153 +129,132 @@
     .note {
       font-size: 13px;
       color: #555;
-      margin-top: 32px;
+      margin-top: 30px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
     }
   </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
 <div class="page">
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › RD Calculator
+  </div>
 
   <h1>RD Calculator</h1>
 
   <p>
-    Use this RD calculator to estimate the maturity amount and interest earned
-    on your recurring deposit based on monthly investment, interest rate
-    and tenure.
+    This RD calculator helps you estimate the maturity amount of a recurring
+    deposit based on monthly investment, interest rate, and duration.
   </p>
 
+  <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="monthly">Monthly Deposit (₹)</label>
-    <input type="number" id="monthly" aria-label="Monthly Deposit" min="1">
+    <input type="number" id="monthly" placeholder="e.g. 5000">
 
     <label for="rate">Annual Interest Rate (%)</label>
-    <input type="number" id="rate" aria-label="Interest Rate" min="0.1" step="0.01">
+    <input type="number" id="rate" placeholder="e.g. 6.5">
 
     <label for="years">Tenure (Years)</label>
-    <input type="number" id="years" aria-label="Tenure in Years" min="1">
+    <input type="number" id="years" placeholder="e.g. 5">
 
-    <button type="button" onclick="calculateRD()">Calculate RD</button>
+    <button onclick="calculateRD()">Calculate</button>
 
-    <div class="result" id="investedResult"></div>
-    <div class="result" id="interestResult"></div>
-    <div class="result" id="maturityResult"></div>
+    <div class="result" id="maturity"></div>
+    <div class="result" id="invested"></div>
+    <div class="result" id="interest"></div>
 
-    <canvas id="rdChart"></canvas>
   </div>
 
+  <!-- AD -->
   <div class="ad-slot">Advertisement</div>
 
-  <h2>What is a Recurring Deposit?</h2>
+  <!-- SEO CONTENT -->
+  <h2>How RD returns are calculated</h2>
   <p>
-    A Recurring Deposit (RD) allows you to invest a fixed amount every month
-    for a specific tenure and earn guaranteed returns at a fixed interest rate.
-  </p>
-
-  <h2>How RD Interest is Calculated</h2>
-  <p>
-    RD interest is compounded quarterly in most banks.
-    Each monthly deposit earns interest for a different duration.
+    Recurring deposits earn interest compounded quarterly as per most Indian
+    banks. Each monthly deposit earns interest for a different duration until
+    maturity.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
-    <li><a href="fd-calculator.html">FD Calculator</a></li>
     <li><a href="sip-calculator.html">SIP Calculator</a></li>
-    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="fd-calculator.html">FD Calculator</a></li>
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Disclaimer:</strong> RD returns are indicative.
-    Actual returns may vary depending on bank compounding rules.
+    <strong>Note:</strong> RD interest rates vary across banks. Results shown are
+    indicative.
   </p>
 
 </div>
 
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
+
 <script>
 function calculateRD() {
-  const monthly = Number(monthlyInput.value);
-  const rate = Number(rateInput.value);
-  const years = Number(yearsInput.value);
+  const P = Number(document.getElementById("monthly").value);
+  const rate = Number(document.getElementById("rate").value) / 100;
+  const years = Number(document.getElementById("years").value);
 
-  investedResult.textContent = "";
-  interestResult.textContent = "";
-  maturityResult.textContent = "";
-  rdChart.style.display = "none";
-
-  if (monthly <= 0 || rate <= 0 || years <= 0) {
-    maturityResult.textContent = "Please enter valid positive values.";
+  if (P <= 0 || rate <= 0 || years <= 0) {
+    document.getElementById("maturity").innerHTML = "Please enter valid values.";
+    document.getElementById("invested").innerHTML = "";
+    document.getElementById("interest").innerHTML = "";
     return;
   }
 
+  const n = 4; // quarterly compounding
   const months = years * 12;
-  const quarterlyRate = rate / 100 / 4;
-
   let maturity = 0;
-  let yearlyData = [];
 
   for (let i = 1; i <= months; i++) {
-    const quarters = Math.ceil((months - i + 1) / 3);
-    maturity += monthly * Math.pow(1 + quarterlyRate, quarters);
-
-    if (i % 12 === 0) {
-      yearlyData.push(Math.round(maturity));
-    }
+    const remainingMonths = months - i + 1;
+    maturity += P * Math.pow(1 + rate / n, (remainingMonths / 12) * n);
   }
 
-  const invested = monthly * months;
+  const invested = P * months;
   const interest = maturity - invested;
 
-  investedResult.textContent =
-    "Total Invested: ₹" + invested.toLocaleString("en-IN");
-
-  interestResult.textContent =
-    "Interest Earned: ₹" + Math.round(interest).toLocaleString("en-IN");
-
-  maturityResult.textContent =
+  document.getElementById("maturity").innerHTML =
     "Maturity Amount: ₹" + Math.round(maturity).toLocaleString("en-IN");
 
-  drawChart(yearlyData);
-}
+  document.getElementById("invested").innerHTML =
+    "Total Invested: ₹" + invested.toLocaleString("en-IN");
 
-const monthlyInput = document.getElementById("monthly");
-const rateInput = document.getElementById("rate");
-const yearsInput = document.getElementById("years");
-const investedResult = document.getElementById("investedResult");
-const interestResult = document.getElementById("interestResult");
-const maturityResult = document.getElementById("maturityResult");
-const rdChart = document.getElementById("rdChart");
-
-function drawChart(data) {
-  if (data.length < 2) return;
-
-  const ctx = rdChart.getContext("2d");
-  rdChart.style.display = "block";
-
-  rdChart.width = rdChart.offsetWidth;
-  rdChart.height = 260;
-
-  ctx.clearRect(0, 0, rdChart.width, rdChart.height);
-
-  const max = Math.max(...data);
-  const padding = 30;
-  const stepX = (rdChart.width - padding * 2) / (data.length - 1);
-
-  ctx.beginPath();
-  ctx.strokeStyle = "#0b5ed7";
-  ctx.lineWidth = 2;
-
-  data.forEach((val, i) => {
-    const x = padding + i * stepX;
-    const y =
-      rdChart.height - padding -
-      (val / max) * (rdChart.height - padding * 2);
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-
-  ctx.stroke();
+  document.getElementById("interest").innerHTML =
+    "Total Interest: ₹" + Math.round(interest).toLocaleString("en-IN");
 }
 </script>
 
