@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <!-- UNIQUE PER PAGE -->
   <title>CAGR Calculator – Compound Annual Growth Rate | SmartCalcs</title>
-  <meta name="description" content="Calculate CAGR to measure annual growth rate of an investment using SmartCalcs CAGR Calculator.">
+  <meta name="description" content="Calculate CAGR easily using initial value, final value, and duration. Free CAGR calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/cagr-calculator.html">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -164,33 +169,47 @@
   <h1>CAGR Calculator</h1>
 
   <p>
-    This CAGR calculator helps you calculate the compound annual growth rate
-    of an investment over a specific period.
+    This CAGR calculator helps you calculate the compound annual growth rate of an
+    investment over a specific time period.
   </p>
 
   <div class="calc-box">
 
-    <label for="start">Initial Investment Value (₹)</label>
-    <input type="number" id="start" placeholder="e.g. 100000">
+    <label for="initial">Initial Value (₹)</label>
+    <input type="number" id="initial" placeholder="e.g. 100000">
 
-    <label for="end">Final Investment Value (₹)</label>
-    <input type="number" id="end" placeholder="e.g. 250000">
+    <label for="final">Final Value (₹)</label>
+    <input type="number" id="final" placeholder="e.g. 200000">
 
     <label for="years">Investment Duration (Years)</label>
     <input type="number" id="years" placeholder="e.g. 5">
 
-    <button onclick="calculate()">Calculate</button>
+    <button onclick="calculate()">Calculate CAGR</button>
 
-    <div class="result" id="result"></div>
-
+    <div class="result" id="cagr"></div>
   </div>
 
   <div class="ad-slot">Advertisement</div>
 
   <h2>How CAGR is calculated</h2>
   <p>
-    CAGR represents the average annual growth rate of an investment assuming
-    profits are reinvested each year.
+    CAGR represents the mean annual growth rate of an investment assuming profits
+    are reinvested each year over the investment period.
+  </p>
+
+  <h2>CAGR Formula</h2>
+  <p>
+    <strong>CAGR = (Final Value / Initial Value)<sup>1/n</sup> − 1</strong>
+  </p>
+  <p>
+    Where:<br>
+    n = Number of years
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    If an investment grows from ₹1,00,000 to ₹2,00,000 in 5 years,
+    CAGR shows the average yearly growth rate.
   </p>
 
   <h2>Related Calculators</h2>
@@ -201,7 +220,7 @@
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> CAGR is a smoothing measure and does not reflect market volatility.
+    <strong>Note:</strong> CAGR is an average rate and does not reflect yearly volatility.
   </p>
 
 </div>
@@ -213,19 +232,19 @@
 
 <script>
 function calculate() {
-  const start = Number(document.getElementById("start").value);
-  const end = Number(document.getElementById("end").value);
+  const initial = Number(document.getElementById("initial").value);
+  const finalVal = Number(document.getElementById("final").value);
   const years = Number(document.getElementById("years").value);
 
-  if (start <= 0 || end <= 0 || years <= 0) {
-    document.getElementById("result").innerHTML = "Please enter valid values.";
+  if (initial <= 0 || finalVal <= 0 || years <= 0) {
+    document.getElementById("cagr").innerHTML = "Please enter valid values.";
     return;
   }
 
-  const cagr = (Math.pow(end / start, 1 / years) - 1) * 100;
+  const cagr = (Math.pow(finalVal / initial, 1 / years) - 1) * 100;
 
-  document.getElementById("result").innerHTML =
-    "CAGR: " + cagr.toFixed(2) + "% per year";
+  document.getElementById("cagr").innerHTML =
+    "CAGR: " + cagr.toFixed(2) + "%";
 }
 </script>
 
