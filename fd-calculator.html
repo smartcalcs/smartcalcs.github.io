@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <!-- UNIQUE PER PAGE -->
-  <title>FD Calculator – Fixed Deposit Maturity Value | SmartCalcs</title>
-  <meta name="description" content="Calculate fixed deposit maturity value and interest earned using SmartCalcs FD Calculator.">
+  <title>FD Calculator – Fixed Deposit Returns | SmartCalcs</title>
+  <meta name="description" content="Calculate fixed deposit maturity amount using compound interest. Free FD calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/fd-calculator.html">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -110,6 +115,13 @@
       font-weight: bold;
     }
 
+    canvas {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 260px;
+      display: none;
+    }
+
     .ad-slot {
       margin: 30px 0;
       padding: 10px;
@@ -164,8 +176,8 @@
   <h1>FD Calculator</h1>
 
   <p>
-    This FD calculator helps you calculate the maturity value and interest
-    earned on a fixed deposit investment.
+    This FD calculator helps you estimate the maturity amount of a fixed deposit
+    using compound interest and shows year-wise growth.
   </p>
 
   <div class="calc-box">
@@ -173,36 +185,53 @@
     <label for="principal">Deposit Amount (₹)</label>
     <input type="number" id="principal" placeholder="e.g. 100000">
 
-    <label for="rate">Annual Interest Rate (%)</label>
+    <label for="rate">Interest Rate (% per annum)</label>
     <input type="number" id="rate" placeholder="e.g. 6.5">
 
     <label for="years">Tenure (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 3">
+    <input type="number" id="years" placeholder="e.g. 5">
 
     <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result"></div>
-    <div class="result" id="interest"></div>
 
+    <canvas id="growthChart"></canvas>
   </div>
 
   <div class="ad-slot">Advertisement</div>
 
   <h2>How FD returns are calculated</h2>
   <p>
-    Fixed deposit returns are calculated using compound interest, usually
-    compounded annually unless specified otherwise by the bank.
+    Fixed deposit returns are calculated using compound interest, where the principal
+    amount earns interest over a fixed tenure at a predetermined rate.
+  </p>
+
+  <h2>FD Formula</h2>
+  <p>
+    <strong>A = P × (1 + r)<sup>n</sup></strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Principal amount<br>
+    r = Annual interest rate (÷ 100)<br>
+    n = Number of years
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    Depositing ₹1,00,000 for 5 years at an interest rate of 6.5%
+    shows how fixed deposits grow safely over time.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
     <li><a href="sip-calculator.html">SIP Calculator</a></li>
     <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
-    <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Actual FD returns may vary based on bank policies and compounding frequency.
+    <strong>Note:</strong> FD interest rates may vary across banks and tenures.
   </p>
 
 </div>
@@ -215,23 +244,53 @@
 <script>
 function calculate() {
   const P = Number(document.getElementById("principal").value);
-  const r = Number(document.getElementById("rate").value) / 100;
-  const t = Number(document.getElementById("years").value);
+  const rate = Number(document.getElementById("rate").value) / 100;
+  const years = Number(document.getElementById("years").value);
 
-  if (P <= 0 || r <= 0 || t <= 0) {
+  if (P <= 0 || years <= 0 || rate < 0) {
     document.getElementById("result").innerHTML = "Please enter valid values.";
-    document.getElementById("interest").innerHTML = "";
     return;
   }
 
-  const maturity = P * Math.pow(1 + r, t);
-  const interestEarned = maturity - P;
+  let values = [];
+  let total = P;
+
+  for (let i = 1; i <= years; i++) {
+    total = total * (1 + rate);
+    values.push(Math.round(total));
+  }
 
   document.getElementById("result").innerHTML =
-    "Maturity Value: ₹" + Math.round(maturity).toLocaleString("en-IN");
+    "Maturity Amount: ₹" + values.at(-1).toLocaleString("en-IN");
 
-  document.getElementById("interest").innerHTML =
-    "Interest Earned: ₹" + Math.round(interestEarned).toLocaleString("en-IN");
+  drawChart(values);
+}
+
+function drawChart(data) {
+  const canvas = document.getElementById("growthChart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const max = Math.max(...data);
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / (data.length - 1);
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  data.forEach((val, i) => {
+    const x = padding + i * stepX;
+    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
 }
 </script>
 
