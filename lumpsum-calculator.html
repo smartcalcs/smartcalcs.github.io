@@ -5,7 +5,10 @@
 
   <!-- UNIQUE PER PAGE -->
   <title>Lumpsum Calculator – Investment Growth | SmartCalcs</title>
-  <meta name="description" content="Calculate future value of a one-time investment using compound interest with this Lumpsum Calculator.">
+  <meta name="description" content="Calculate future value of a lumpsum investment with compound interest. Free Lumpsum calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/lumpsum-calculator.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -174,14 +177,13 @@
 
   <p>
     This lumpsum calculator helps you estimate the future value of a one-time investment
-    using compound interest over a chosen time period.
+    using compound interest and shows year-wise growth.
   </p>
 
-  <!-- CALCULATOR -->
   <div class="calc-box">
 
-    <label for="principal">Investment Amount (₹)</label>
-    <input type="number" id="principal" placeholder="e.g. 100000">
+    <label for="amount">Investment Amount (₹)</label>
+    <input type="number" id="amount" placeholder="e.g. 100000">
 
     <label for="rate">Expected Annual Return (%)</label>
     <input type="number" id="rate" placeholder="e.g. 12">
@@ -189,40 +191,47 @@
     <label for="years">Investment Duration (Years)</label>
     <input type="number" id="years" placeholder="e.g. 10">
 
-    <button onclick="calculateLumpsum()">Calculate</button>
+    <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result"></div>
-    <div class="result" id="gain"></div>
 
     <canvas id="growthChart"></canvas>
-
   </div>
 
-  <!-- AD -->
   <div class="ad-slot">Advertisement</div>
 
-  <!-- SEO CONTENT -->
-  <h2>How Lumpsum Returns Are Calculated</h2>
+  <h2>How lumpsum returns are calculated</h2>
   <p>
-    Lumpsum investment returns are calculated using compound interest.
-    The entire investment compounds annually over the investment period.
+    Lumpsum returns are calculated using compound interest, where the entire investment
+    grows at a fixed annual rate over the chosen time period.
+  </p>
+
+  <h2>Lumpsum Formula</h2>
+  <p>
+    <strong>FV = P × (1 + r)<sup>n</sup></strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Initial investment amount<br>
+    r = Annual rate of return (÷ 100)<br>
+    n = Number of years
   </p>
 
   <h2>Example</h2>
   <p>
-    Investing ₹1,00,000 for 10 years at an annual return of 12% shows how
-    long-term compounding increases wealth.
+    Investing ₹1,00,000 for 10 years at an annual return of 12%
+    demonstrates how compounding increases wealth over time.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
     <li><a href="sip-calculator.html">SIP Calculator</a></li>
-    <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
     <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="cagr-calculator.html">CAGR Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Results are estimates only. Actual market returns may vary.
+    <strong>Note:</strong> Results are estimates only. Market returns are not guaranteed.
   </p>
 
 </div>
@@ -233,14 +242,13 @@
 </footer>
 
 <script>
-function calculateLumpsum() {
-  const P = Number(document.getElementById("principal").value);
+function calculate() {
+  const P = Number(document.getElementById("amount").value);
   const rate = Number(document.getElementById("rate").value) / 100;
   const years = Number(document.getElementById("years").value);
 
   if (P <= 0 || years <= 0 || rate < 0) {
     document.getElementById("result").innerHTML = "Please enter valid values.";
-    document.getElementById("gain").innerHTML = "";
     return;
   }
 
@@ -253,10 +261,7 @@ function calculateLumpsum() {
   }
 
   document.getElementById("result").innerHTML =
-    "Final Value: ₹" + values.at(-1).toLocaleString("en-IN");
-
-  document.getElementById("gain").innerHTML =
-    "Total Gain: ₹" + (values.at(-1) - P).toLocaleString("en-IN");
+    "Estimated Value: ₹" + values.at(-1).toLocaleString("en-IN");
 
   drawChart(values);
 }
