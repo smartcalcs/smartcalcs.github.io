@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
 
   <!-- UNIQUE PER PAGE -->
-  <title>RD Calculator – Recurring Deposit Maturity Amount | SmartCalcs</title>
-  <meta name="description" content="Calculate recurring deposit maturity amount with monthly investment and interest rate. Free RD calculator by SmartCalcs.">
+  <title>RD Calculator – Recurring Deposit Returns | SmartCalcs</title>
+  <meta name="description" content="Calculate recurring deposit maturity amount with compound interest and growth chart. Free RD calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/rd-calculator.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -112,6 +115,13 @@
       font-weight: bold;
     }
 
+    canvas {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 260px;
+      display: none;
+    }
+
     .ad-slot {
       margin: 30px 0;
       padding: 10px;
@@ -150,7 +160,6 @@
 
 <body>
 
-<!-- HEADER -->
 <div class="site-header">
   <div class="inner">
     <a href="index.html">SmartCalcs</a>
@@ -160,7 +169,6 @@
 
 <div class="page">
 
-  <!-- BREADCRUMB -->
   <div class="breadcrumb">
     <a href="index.html">Home</a> › RD Calculator
   </div>
@@ -168,51 +176,63 @@
   <h1>RD Calculator</h1>
 
   <p>
-    This RD calculator helps you estimate the maturity amount of a recurring
-    deposit based on monthly investment, interest rate, and duration.
+    This RD calculator helps you estimate the maturity value of a recurring deposit
+    by investing a fixed amount every month with compound interest.
   </p>
 
-  <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="monthly">Monthly Deposit (₹)</label>
-    <input type="number" id="monthly" placeholder="e.g. 5000">
+    <input type="number" id="monthly" placeholder="e.g. 3000">
 
-    <label for="rate">Annual Interest Rate (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 6.5">
+    <label for="rate">Interest Rate (% per annum)</label>
+    <input type="number" id="rate" placeholder="e.g. 6.8">
 
     <label for="years">Tenure (Years)</label>
     <input type="number" id="years" placeholder="e.g. 5">
 
-    <button onclick="calculateRD()">Calculate</button>
+    <button onclick="calculate()">Calculate</button>
 
-    <div class="result" id="maturity"></div>
+    <div class="result" id="result"></div>
     <div class="result" id="invested"></div>
-    <div class="result" id="interest"></div>
 
+    <canvas id="growthChart"></canvas>
   </div>
 
-  <!-- AD -->
   <div class="ad-slot">Advertisement</div>
 
-  <!-- SEO CONTENT -->
   <h2>How RD returns are calculated</h2>
   <p>
-    Recurring deposits earn interest compounded quarterly as per most Indian
-    banks. Each monthly deposit earns interest for a different duration until
-    maturity.
+    In a recurring deposit, a fixed amount is invested every month and each deposit
+    earns interest for a different duration until maturity.
+  </p>
+
+  <h2>RD Formula</h2>
+  <p>
+    <strong>M = P × n + Interest</strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Monthly deposit<br>
+    n = Total number of months<br>
+    Interest is compounded monthly based on the deposit period
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    Depositing ₹3,000 every month for 5 years at 6.8% interest shows how
+    recurring deposits help build disciplined savings.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
-    <li><a href="sip-calculator.html">SIP Calculator</a></li>
     <li><a href="fd-calculator.html">FD Calculator</a></li>
-    <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> RD interest rates vary across banks. Results shown are
-    indicative.
+    <strong>Note:</strong> RD interest rates may vary across banks and schemes.
   </p>
 
 </div>
@@ -223,38 +243,61 @@
 </footer>
 
 <script>
-function calculateRD() {
+function calculate() {
   const P = Number(document.getElementById("monthly").value);
-  const rate = Number(document.getElementById("rate").value) / 100;
+  const annualRate = Number(document.getElementById("rate").value) / 100;
   const years = Number(document.getElementById("years").value);
 
-  if (P <= 0 || rate <= 0 || years <= 0) {
-    document.getElementById("maturity").innerHTML = "Please enter valid values.";
+  if (P <= 0 || years <= 0 || annualRate < 0) {
+    document.getElementById("result").innerHTML = "Please enter valid values.";
     document.getElementById("invested").innerHTML = "";
-    document.getElementById("interest").innerHTML = "";
     return;
   }
 
-  const n = 4; // quarterly compounding
   const months = years * 12;
-  let maturity = 0;
+  const rate = annualRate / 12;
+  let total = 0;
+  let values = [];
 
   for (let i = 1; i <= months; i++) {
-    const remainingMonths = months - i + 1;
-    maturity += P * Math.pow(1 + rate / n, (remainingMonths / 12) * n);
+    total = (total + P) * (1 + rate);
+    if (i % 12 === 0) values.push(Math.round(total));
   }
 
-  const invested = P * months;
-  const interest = maturity - invested;
-
-  document.getElementById("maturity").innerHTML =
-    "Maturity Amount: ₹" + Math.round(maturity).toLocaleString("en-IN");
+  document.getElementById("result").innerHTML =
+    "Maturity Amount: ₹" + values.at(-1).toLocaleString("en-IN");
 
   document.getElementById("invested").innerHTML =
-    "Total Invested: ₹" + invested.toLocaleString("en-IN");
+    "Total Invested: ₹" + (P * months).toLocaleString("en-IN");
 
-  document.getElementById("interest").innerHTML =
-    "Total Interest: ₹" + Math.round(interest).toLocaleString("en-IN");
+  drawChart(values);
+}
+
+function drawChart(data) {
+  const canvas = document.getElementById("growthChart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const max = Math.max(...data);
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / (data.length - 1);
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  data.forEach((val, i) => {
+    const x = padding + i * stepX;
+    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
 }
 </script>
 
