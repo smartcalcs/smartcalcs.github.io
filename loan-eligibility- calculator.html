@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>Loan Eligibility Calculator – Check How Much Loan You Can Get | SmartCalcs</title>
+  <meta name="description" content="Calculate your loan eligibility based on monthly income, interest rate and tenure. Free loan eligibility calculator by SmartCalcs.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 15px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .ad-slot {
+      margin: 30px 0;
+      padding: 10px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- ONE H1 ONLY -->
+  <h1>Loan Eligibility Calculator</h1>
+
+  <p>
+    This loan eligibility calculator helps you estimate how much loan you may be eligible for
+    based on your monthly income, interest rate, and loan tenure.
+  </p>
+
+  <!-- CALCULATOR -->
+  <div class="calc-box">
+
+    <label for="income">Monthly Income (₹)</label>
+    <input type="number" id="income" placeholder="e.g. 50000" aria-label="Monthly income">
+
+    <label for="rate">Interest Rate (% per year)</label>
+    <input type="number" id="rate" placeholder="e.g. 9" aria-label="Loan interest rate">
+
+    <label for="years">Loan Tenure (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 20" aria-label="Loan tenure">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+    <div class="result" id="emi"></div>
+
+  </div>
+
+  <!-- AD PLACEHOLDER -->
+  <div class="ad-slot">Advertisement</div>
+
+  <!-- SEO CONTENT -->
+  <h2>How loan eligibility is calculated</h2>
+  <p>
+    Loan eligibility is mainly based on your repayment capacity.
+    Banks typically allow up to 40–50% of your monthly income as EMI.
+    Using the EMI formula, the maximum loan amount is calculated
+    for the selected interest rate and tenure.
+  </p>
+
+  <h2>Formula used</h2>
+  <p>
+    EMI formula:
+    <br><br>
+    <strong>EMI = P × r × (1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> − 1)</strong>
+    <br><br>
+    where P is loan amount, r is monthly interest rate, and n is total months.
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    If your monthly income is ₹50,000, interest rate is 9% per year,
+    and tenure is 20 years, this calculator estimates the maximum loan
+    amount you may be eligible for.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="fd-calculator.html">FD Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> Actual loan eligibility may vary based on lender policies,
+    credit score, and existing liabilities. Results shown are estimates only.
+  </p>
+
+</div>
+
+<script>
+function calculate() {
+  const income = Number(document.getElementById("income").value);
+  const rate = Number(document.getElementById("rate").value) / 100 / 12;
+  const years = Number(document.getElementById("years").value);
+
+  if (income <= 0 || rate <= 0 || years <= 0) {
+    document.getElementById("result").innerHTML =
+      "Please enter valid positive values.";
+    document.getElementById("emi").innerHTML = "";
+    return;
+  }
+
+  // 50% of income allowed as EMI
+  const maxEmi = income * 0.5;
+  const months = years * 12;
+
+  // Reverse EMI formula to get principal
+  const loanAmount =
+    maxEmi * ((Math.pow(1 + rate, months) - 1) / (rate * Math.pow(1 + rate, months)));
+
+  document.getElementById("result").innerHTML =
+    "Eligible Loan Amount: ₹" + Math.round(loanAmount).toLocaleString("en-IN");
+
+  document.getElementById("emi").innerHTML =
+    "Estimated EMI: ₹" + Math.round(maxEmi).toLocaleString("en-IN");
+}
+</script>
+
+</body>
+</html>
