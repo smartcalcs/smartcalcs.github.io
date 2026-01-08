@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
 
   <!-- UNIQUE PER PAGE -->
-  <title>Loan Eligibility Calculator – Check How Much Loan You Can Get | SmartCalcs</title>
-  <meta name="description" content="Calculate your loan eligibility based on monthly income, interest rate and tenure. Free loan eligibility calculator by SmartCalcs.">
+  <title>Loan Eligibility Calculator – Check Maximum Loan Amount | SmartCalcs</title>
+  <meta name="description" content="Check your loan eligibility based on income, existing EMIs, interest rate and tenure. Free loan eligibility calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/loan-eligibility-calculator.html">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,6 +18,28 @@
       font-family: Arial, Helvetica, sans-serif;
       background: #ffffff;
       color: #222;
+    }
+
+    .site-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .site-header .inner {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-header a {
+      text-decoration: none;
+      color: #0b5ed7;
+      font-weight: bold;
+      font-size: 16px;
     }
 
     .page {
@@ -36,6 +61,16 @@
     p {
       font-size: 15px;
       line-height: 1.6;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
     }
 
     .calc-box {
@@ -80,6 +115,13 @@
       font-weight: bold;
     }
 
+    canvas {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 260px;
+      display: none;
+    }
+
     .ad-slot {
       margin: 30px 0;
       padding: 10px;
@@ -99,108 +141,165 @@
       color: #555;
       margin-top: 30px;
     }
+
+    footer {
+      margin-top: 50px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
+    }
   </style>
 </head>
 
 <body>
 
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
 <div class="page">
 
-  <!-- ONE H1 ONLY -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › Loan Eligibility Calculator
+  </div>
+
   <h1>Loan Eligibility Calculator</h1>
 
   <p>
-    This loan eligibility calculator helps you estimate how much loan you may be eligible for
-    based on your monthly income, interest rate, and loan tenure.
+    This loan eligibility calculator helps you estimate the maximum loan amount
+    you may be eligible for based on your income, expenses, interest rate and loan tenure.
   </p>
 
-  <!-- CALCULATOR -->
   <div class="calc-box">
 
     <label for="income">Monthly Income (₹)</label>
-    <input type="number" id="income" placeholder="e.g. 50000" aria-label="Monthly income">
+    <input type="number" id="income" placeholder="e.g. 50000">
 
-    <label for="rate">Interest Rate (% per year)</label>
-    <input type="number" id="rate" placeholder="e.g. 9" aria-label="Loan interest rate">
+    <label for="emi">Existing Monthly EMIs (₹)</label>
+    <input type="number" id="emi" placeholder="e.g. 5000">
+
+    <label for="rate">Expected Interest Rate (% per year)</label>
+    <input type="number" id="rate" placeholder="e.g. 9">
 
     <label for="years">Loan Tenure (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 20" aria-label="Loan tenure">
+    <input type="number" id="years" placeholder="e.g. 20">
 
     <button onclick="calculate()">Calculate</button>
 
     <div class="result" id="result"></div>
-    <div class="result" id="emi"></div>
+    <div class="result" id="emiPossible"></div>
 
+    <canvas id="growthChart"></canvas>
   </div>
 
-  <!-- AD PLACEHOLDER -->
   <div class="ad-slot">Advertisement</div>
 
-  <!-- SEO CONTENT -->
   <h2>How loan eligibility is calculated</h2>
   <p>
-    Loan eligibility is mainly based on your repayment capacity.
-    Banks typically allow up to 40–50% of your monthly income as EMI.
-    Using the EMI formula, the maximum loan amount is calculated
-    for the selected interest rate and tenure.
+    Banks usually allow 40%–60% of your monthly income to be used for loan EMIs.
+    This calculator assumes a safe eligibility limit of 50% after existing EMIs.
   </p>
 
-  <h2>Formula used</h2>
+  <h2>Eligibility Formula</h2>
   <p>
-    EMI formula:
-    <br><br>
-    <strong>EMI = P × r × (1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> − 1)</strong>
-    <br><br>
-    where P is loan amount, r is monthly interest rate, and n is total months.
+    First, maximum affordable EMI is calculated:
+  </p>
+  <p>
+    <strong>Eligible EMI = (Monthly Income × 50%) − Existing EMIs</strong>
+  </p>
+  <p>
+    Loan amount is then calculated using the EMI formula:
+  </p>
+  <p>
+    <strong>Loan = EMI × ((1 + r)<sup>n</sup> − 1) / (r × (1 + r)<sup>n</sup>)</strong>
   </p>
 
   <h2>Example</h2>
   <p>
-    If your monthly income is ₹50,000, interest rate is 9% per year,
-    and tenure is 20 years, this calculator estimates the maximum loan
-    amount you may be eligible for.
+    If your monthly income is ₹50,000 with existing EMIs of ₹5,000,
+    you may be eligible for a loan worth several lakhs depending on tenure and interest rate.
   </p>
 
   <h2>Related Calculators</h2>
   <ul>
     <li><a href="emi-calculator.html">EMI Calculator</a></li>
     <li><a href="sip-calculator.html">SIP Calculator</a></li>
-    <li><a href="fd-calculator.html">FD Calculator</a></li>
+    <li><a href="ppf-calculator.html">PPF Calculator</a></li>
   </ul>
 
   <p class="note">
-    <strong>Note:</strong> Actual loan eligibility may vary based on lender policies,
-    credit score, and existing liabilities. Results shown are estimates only.
+    <strong>Note:</strong> Actual loan eligibility may vary by bank policies,
+    credit score and employment profile.
   </p>
 
 </div>
 
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
+
 <script>
 function calculate() {
   const income = Number(document.getElementById("income").value);
+  const existingEmi = Number(document.getElementById("emi").value);
   const rate = Number(document.getElementById("rate").value) / 100 / 12;
   const years = Number(document.getElementById("years").value);
 
-  if (income <= 0 || rate <= 0 || years <= 0) {
-    document.getElementById("result").innerHTML =
-      "Please enter valid positive values.";
-    document.getElementById("emi").innerHTML = "";
+  if (income <= 0 || years <= 0 || rate <= 0) {
+    document.getElementById("result").innerHTML = "Please enter valid values.";
     return;
   }
 
-  // 50% of income allowed as EMI
-  const maxEmi = income * 0.5;
-  const months = years * 12;
+  const eligibleEmi = income * 0.5 - existingEmi;
 
-  // Reverse EMI formula to get principal
+  if (eligibleEmi <= 0) {
+    document.getElementById("result").innerHTML =
+      "Based on your inputs, loan eligibility is very low.";
+    return;
+  }
+
+  const months = years * 12;
   const loanAmount =
-    maxEmi * ((Math.pow(1 + rate, months) - 1) / (rate * Math.pow(1 + rate, months)));
+    eligibleEmi * ((Math.pow(1 + rate, months) - 1) / (rate * Math.pow(1 + rate, months)));
 
   document.getElementById("result").innerHTML =
-    "Eligible Loan Amount: ₹" + Math.round(loanAmount).toLocaleString("en-IN");
+    "Estimated Loan Eligibility: ₹" + Math.round(loanAmount).toLocaleString("en-IN");
 
-  document.getElementById("emi").innerHTML =
-    "Estimated EMI: ₹" + Math.round(maxEmi).toLocaleString("en-IN");
+  document.getElementById("emiPossible").innerHTML =
+    "Maximum Affordable EMI: ₹" + Math.round(eligibleEmi).toLocaleString("en-IN");
+
+  drawChart(loanAmount, months);
+}
+
+function drawChart(amount, months) {
+  const canvas = document.getElementById("growthChart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  ctx.moveTo(30, canvas.height - 30);
+  ctx.lineTo(canvas.width - 30, 30);
+
+  ctx.stroke();
 }
 </script>
 
