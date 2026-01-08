@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>PPF Calculator – Public Provident Fund Returns | SmartCalcs</title>
+  <meta name="description" content="Calculate PPF maturity amount with yearly investment and interest rate. Free PPF calculator by SmartCalcs.">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 15px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .ad-slot {
+      margin: 30px 0;
+      padding: 10px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- ONE H1 ONLY -->
+  <h1>PPF Calculator</h1>
+
+  <p>
+    This PPF calculator helps you estimate the maturity value of your Public Provident Fund
+    investment based on yearly contribution and interest rate.
+  </p>
+
+  <!-- CALCULATOR -->
+  <div class="calc-box">
+
+    <label for="yearly">Yearly Investment (₹)</label>
+    <input type="number" id="yearly" placeholder="e.g. 150000" aria-label="Yearly PPF investment">
+
+    <label for="rate">Interest Rate (% per year)</label>
+    <input type="number" id="rate" placeholder="e.g. 7.1" aria-label="PPF interest rate">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+    <div class="result" id="invested"></div>
+
+  </div>
+
+  <!-- AD PLACEHOLDER -->
+  <div class="ad-slot">Advertisement</div>
+
+  <!-- SEO CONTENT -->
+  <h2>How PPF returns are calculated</h2>
+  <p>
+    Public Provident Fund (PPF) has a fixed lock-in period of 15 years.
+    Interest is compounded annually and applied to the balance every year.
+    The final maturity value depends on yearly contributions and the prevailing interest rate.
+  </p>
+
+  <h2>Formula used</h2>
+  <p>
+    Each year’s investment grows with compound interest:
+    <br><br>
+    <strong>A = P × ( ( (1 + r)<sup>n</sup> − 1 ) / r ) × (1 + r)</strong>
+    <br><br>
+    where P is yearly investment, r is annual interest rate, and n is 15 years.
+  </p>
+
+  <h2>Example</h2>
+  <p>
+    If you invest ₹1,50,000 every year for 15 years at an interest rate of 7.1%,
+    this calculator estimates the total invested amount and the maturity value at the end of the tenure.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="fd-calculator.html">FD Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> PPF interest rates are set by the Government of India and may change quarterly.
+    Results shown are estimates for educational purposes only.
+  </p>
+
+</div>
+
+<script>
+function calculate() {
+  const P = Number(document.getElementById("yearly").value);
+  const rate = Number(document.getElementById("rate").value) / 100;
+  const years = 15;
+
+  if (P <= 0 || rate <= 0) {
+    document.getElementById("result").innerHTML =
+      "Please enter valid positive values.";
+    document.getElementById("invested").innerHTML = "";
+    return;
+  }
+
+  let total = 0;
+
+  for (let i = 1; i <= years; i++) {
+    total = (total + P) * (1 + rate);
+  }
+
+  const investedAmount = P * years;
+
+  document.getElementById("result").innerHTML =
+    "Maturity Value: ₹" + Math.round(total).toLocaleString("en-IN");
+
+  document.getElementById("invested").innerHTML =
+    "Total Invested: ₹" + investedAmount.toLocaleString("en-IN");
+}
+</script>
+
+</body>
+</html>
