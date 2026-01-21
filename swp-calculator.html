@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>SWP Calculator – Monthly Withdrawal Returns | SmartCalcs</title>
+  <meta name="description" content="Calculate SWP monthly withdrawals, total withdrawal, and remaining investment value. Free SWP calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/swp-calculator.html">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #222; }
+    .site-header { background: #f8f9fa; border-bottom: 1px solid #ddd; padding: 12px 0; }
+    .site-header .inner { max-width: 760px; margin: auto; padding: 0 18px; display: flex; justify-content: space-between; align-items: center; }
+    .site-header a { text-decoration: none; color: #0b5ed7; font-weight: bold; font-size: 16px; }
+    .page { max-width: 760px; margin: auto; padding: 18px; }
+    h1 { font-size: 24px; margin-bottom: 8px; }
+    h2 { font-size: 18px; margin-top: 30px; }
+    p { font-size: 15px; line-height: 1.6; }
+    .breadcrumb { font-size: 13px; margin-bottom: 12px; }
+    .breadcrumb a { color: #0b5ed7; text-decoration: none; }
+    .calc-box { border: 1px solid #ddd; padding: 16px; margin-top: 15px; }
+    label { display: block; font-weight: bold; margin-top: 12px; font-size: 14px; }
+    input { width: 100%; padding: 8px; margin-top: 5px; font-size: 15px; box-sizing: border-box; }
+    button { width: 100%; margin-top: 15px; padding: 10px; font-size: 15px; background: #0b5ed7; color: #fff; border: none; cursor: pointer; }
+    button:hover { background: #084298; }
+    .result { margin-top: 12px; font-size: 16px; font-weight: bold; }
+    canvas { margin-top: 20px; width: 100%; max-height: 260px; display: none; }
+    .ad-slot { margin: 30px 0; padding: 10px; border: 1px dashed #ccc; text-align: center; font-size: 13px; color: #666; }
+    ul { padding-left: 18px; font-size: 14px; }
+    .note { font-size: 13px; color: #555; margin-top: 30px; }
+    footer { margin-top: 50px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 13px; text-align: center; }
+    footer a { color: #0b5ed7; text-decoration: none; margin: 0 8px; }
+  </style>
+</head>
+
+<body>
+
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › SWP Calculator
+  </div>
+
+  <h1>SWP Calculator</h1>
+
+  <p>
+    This SWP calculator helps you estimate how long your investment can last
+    while you withdraw a fixed amount every month.
+  </p>
+
+  <div class="calc-box">
+
+    <label for="initial">Initial Investment (₹)</label>
+    <input type="number" id="initial" placeholder="e.g. 1000000">
+
+    <label for="withdraw">Monthly Withdrawal (₹)</label>
+    <input type="number" id="withdraw" placeholder="e.g. 10000">
+
+    <label for="rate">Expected Annual Return (%)</label>
+    <input type="number" id="rate" placeholder="e.g. 10">
+
+    <label for="years">Withdrawal Duration (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 15">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="remaining"></div>
+    <div class="result" id="totalWithdrawn"></div>
+
+    <canvas id="growthChart"></canvas>
+  </div>
+
+  <div class="ad-slot">Advertisement</div>
+
+  <h2>How SWP works</h2>
+  <p>
+    In a Systematic Withdrawal Plan, a fixed amount is withdrawn periodically
+    while the remaining balance continues to earn returns.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="ppf-calculator.html">PPF Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> SWP sustainability depends on market returns and withdrawal rate.
+  </p>
+
+</div>
+
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
+
+<script>
+function calculate() {
+  const initial = Number(document.getElementById("initial").value);
+  const withdraw = Number(document.getElementById("withdraw").value);
+  const rate = Number(document.getElementById("rate").value) / 100 / 12;
+  const years = Number(document.getElementById("years").value);
+
+  if (initial <= 0 || withdraw <= 0 || years <= 0 || rate < 0) {
+    document.getElementById("remaining").innerHTML = "Please enter valid values.";
+    document.getElementById("totalWithdrawn").innerHTML = "";
+    return;
+  }
+
+  let balance = initial;
+  let months = years * 12;
+  let values = [];
+  let withdrawn = 0;
+
+  for (let i = 1; i <= months; i++) {
+    balance = balance * (1 + rate) - withdraw;
+    withdrawn += withdraw;
+    if (balance <= 0) { balance = 0; break; }
+    if (i % 12 === 0) values.push(Math.round(balance));
+  }
+
+  document.getElementById("remaining").innerHTML =
+    "Remaining Value: ₹" + Math.round(balance).toLocaleString("en-IN");
+
+  document.getElementById("totalWithdrawn").innerHTML =
+    "Total Withdrawn: ₹" + withdrawn.toLocaleString("en-IN");
+
+  drawChart(values);
+}
+
+function drawChart(data) {
+  if (data.length === 0) return;
+
+  const canvas = document.getElementById("growthChart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const max = Math.max(...data);
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / (data.length - 1);
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  data.forEach((val, i) => {
+    const x = padding + i * stepX;
+    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+}
+</script>
+
+</body>
+</html>
