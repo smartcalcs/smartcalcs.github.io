@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>NPS Calculator – National Pension Scheme Returns | SmartCalcs</title>
+  <meta name="description" content="Calculate NPS maturity value and total investment. Free National Pension Scheme calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/nps-calculator.html">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+    }
+
+    .site-header {
+      background: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .site-header .inner {
+      max-width: 760px;
+      margin: auto;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-header a {
+      text-decoration: none;
+      color: #0b5ed7;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
+    }
+
+    .calc-box {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 15px;
+      background: #0b5ed7;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #084298;
+    }
+
+    .result {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    canvas {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 260px;
+      display: none;
+    }
+
+    .ad-slot {
+      margin: 30px 0;
+      padding: 10px;
+      border: 1px dashed #ccc;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › NPS Calculator
+  </div>
+
+  <h1>NPS Calculator</h1>
+
+  <p>
+    This NPS calculator helps you estimate the maturity value of your National Pension Scheme
+    investments based on annual contributions and expected returns.
+  </p>
+
+  <div class="calc-box">
+
+    <label for="annual">Annual Contribution (₹)</label>
+    <input type="number" id="annual" placeholder="e.g. 50000">
+
+    <label for="rate">Expected Annual Return (%)</label>
+    <input type="number" id="rate" placeholder="e.g. 10">
+
+    <label for="years">Investment Duration (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 25">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+    <div class="result" id="invested"></div>
+
+    <canvas id="growthChart"></canvas>
+  </div>
+
+  <div class="ad-slot">Advertisement</div>
+
+  <h2>How NPS returns are calculated</h2>
+  <p>
+    NPS returns are calculated using annual compounding. Each yearly contribution
+    grows based on the expected market-linked return until retirement.
+  </p>
+
+  <h2>NPS Formula</h2>
+  <p>
+    <strong>M = Σ [ P × (1 + r)<sup>n</sup> ]</strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Annual contribution<br>
+    r = Annual rate of return<br>
+    n = Remaining years until maturity
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="sip-calculator.html">SIP Calculator</a></li>
+    <li><a href="ppf-calculator.html">PPF Calculator</a></li>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> NPS returns are market-linked and subject to variation.
+  </p>
+
+</div>
+
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
+
+<script>
+function calculate() {
+  const P = Number(document.getElementById("annual").value);
+  const rate = Number(document.getElementById("rate").value) / 100;
+  const years = Number(document.getElementById("years").value);
+
+  if (P <= 0 || years <= 0 || rate < 0) {
+    document.getElementById("result").innerHTML = "Please enter valid values.";
+    document.getElementById("invested").innerHTML = "";
+    return;
+  }
+
+  let values = [];
+  let total = 0;
+
+  for (let i = 1; i <= years; i++) {
+    total = (total + P) * (1 + rate);
+    values.push(Math.round(total));
+  }
+
+  document.getElementById("result").innerHTML =
+    "Estimated Maturity Value: ₹" + values.at(-1).toLocaleString("en-IN");
+
+  document.getElementById("invested").innerHTML =
+    "Total Invested: ₹" + (P * years).toLocaleString("en-IN");
+
+  drawChart(values);
+}
+
+function drawChart(data) {
+  const canvas = document.getElementById("growthChart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const max = Math.max(...data);
+  const padding = 30;
+  const stepX = (canvas.width - padding * 2) / (data.length - 1);
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#0b5ed7";
+  ctx.lineWidth = 2;
+
+  data.forEach((val, i) => {
+    const x = padding + i * stepX;
+    const y = canvas.height - padding - (val / max) * (canvas.height - padding * 2);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+}
+</script>
+
+</body>
+</html>
