@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- UNIQUE PER PAGE -->
+  <title>Car Loan Calculator – EMI & Interest | SmartCalcs</title>
+  <meta name="description" content="Calculate car loan EMI, total interest, and repayment amount. Free car loan calculator by SmartCalcs.">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" href="https://smartcalcs.github.io/car-loan-calculator.html">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #222; }
+    .site-header { background: #f8f9fa; border-bottom: 1px solid #ddd; padding: 12px 0; }
+    .site-header .inner { max-width: 760px; margin: auto; padding: 0 18px; display: flex; justify-content: space-between; align-items: center; }
+    .site-header a { text-decoration: none; color: #0b5ed7; font-weight: bold; font-size: 16px; }
+    .page { max-width: 760px; margin: auto; padding: 18px; }
+    h1 { font-size: 24px; margin-bottom: 8px; }
+    h2 { font-size: 18px; margin-top: 30px; }
+    p { font-size: 15px; line-height: 1.6; }
+    .breadcrumb { font-size: 13px; margin-bottom: 12px; }
+    .breadcrumb a { color: #0b5ed7; text-decoration: none; }
+    .calc-box { border: 1px solid #ddd; padding: 16px; margin-top: 15px; }
+    label { display: block; font-weight: bold; margin-top: 12px; font-size: 14px; }
+    input { width: 100%; padding: 8px; margin-top: 5px; font-size: 15px; box-sizing: border-box; }
+    button { width: 100%; margin-top: 15px; padding: 10px; font-size: 15px; background: #0b5ed7; color: #fff; border: none; cursor: pointer; }
+    button:hover { background: #084298; }
+    .result { margin-top: 12px; font-size: 16px; font-weight: bold; }
+    canvas { margin-top: 20px; width: 100%; max-height: 260px; display: none; }
+    .ad-slot { margin: 30px 0; padding: 10px; border: 1px dashed #ccc; text-align: center; font-size: 13px; color: #666; }
+    ul { padding-left: 18px; font-size: 14px; }
+    .note { font-size: 13px; color: #555; margin-top: 30px; }
+    footer { margin-top: 50px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 13px; text-align: center; }
+    footer a { color: #0b5ed7; text-decoration: none; margin: 0 8px; }
+  </style>
+</head>
+
+<body>
+
+<div class="site-header">
+  <div class="inner">
+    <a href="index.html">SmartCalcs</a>
+    <a href="index.html">Home</a>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › Car Loan Calculator
+  </div>
+
+  <h1>Car Loan Calculator</h1>
+
+  <p>
+    This car loan calculator helps you estimate your monthly EMI, total interest payable,
+    and overall repayment amount for a vehicle loan.
+  </p>
+
+  <div class="calc-box">
+
+    <label for="amount">Loan Amount (₹)</label>
+    <input type="number" id="amount" placeholder="e.g. 800000">
+
+    <label for="rate">Interest Rate (% per annum)</label>
+    <input type="number" id="rate" placeholder="e.g. 9">
+
+    <label for="years">Loan Tenure (Years)</label>
+    <input type="number" id="years" placeholder="e.g. 5">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="emi"></div>
+    <div class="result" id="interest"></div>
+    <div class="result" id="total"></div>
+
+    <canvas id="chart"></canvas>
+  </div>
+
+  <div class="ad-slot">Advertisement</div>
+
+  <h2>How car loan EMI is calculated</h2>
+  <p>
+    Car loan EMIs are calculated using the reducing balance method, where interest
+    is charged only on the outstanding loan amount.
+  </p>
+
+  <h2>EMI Formula</h2>
+  <p>
+    <strong>EMI = P × r × (1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> − 1)</strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Loan amount<br>
+    r = Monthly interest rate (annual rate ÷ 12 ÷ 100)<br>
+    n = Total number of months
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="personal-loan-calculator.html">Personal Loan Calculator</a></li>
+    <li><a href="loan-eligibility-calculator.html">Loan Eligibility Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> EMI amounts may vary slightly based on lender policies.
+  </p>
+
+</div>
+
+<footer>
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
+</footer>
+
+<script>
+function calculate() {
+  const P = Number(document.getElementById("amount").value);
+  const r = Number(document.getElementById("rate").value) / 100 / 12;
+  const years = Number(document.getElementById("years").value);
+
+  if (P <= 0 || r <= 0 || years <= 0) {
+    document.getElementById("emi").innerHTML = "Please enter valid values.";
+    document.getElementById("interest").innerHTML = "";
+    document.getElementById("total").innerHTML = "";
+    return;
+  }
+
+  const n = years * 12;
+  const emi = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+  const totalPayment = emi * n;
+  const interest = totalPayment - P;
+
+  document.getElementById("emi").innerHTML =
+    "Monthly EMI: ₹" + Math.round(emi).toLocaleString("en-IN");
+
+  document.getElementById("interest").innerHTML =
+    "Total Interest: ₹" + Math.round(interest).toLocaleString("en-IN");
+
+  document.getElementById("total").innerHTML =
+    "Total Repayment: ₹" + Math.round(totalPayment).toLocaleString("en-IN");
+
+  drawChart(P, interest);
+}
+
+function drawChart(principal, interest) {
+  const canvas = document.getElementById("chart");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
+
+  canvas.width = canvas.offsetWidth;
+  canvas.height = 260;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const data = [principal, interest];
+  const max = Math.max(...data);
+  const barWidth = 80;
+  const gap = 60;
+  const startX = (canvas.width - (barWidth * 2 + gap)) / 2;
+
+  data.forEach((val, i) => {
+    const x = startX + i * (barWidth + gap);
+    const h = (val / max) * 180;
+    const y = canvas.height - h - 30;
+
+    ctx.fillStyle = "#0b5ed7";
+    ctx.fillRect(x, y, barWidth, h);
+
+    ctx.fillStyle = "#000";
+    ctx.font = "13px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(i === 0 ? "Principal" : "Interest", x + barWidth / 2, canvas.height - 10);
+  });
+}
+</script>
+
+</body>
+</html>
