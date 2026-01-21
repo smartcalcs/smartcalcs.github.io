@@ -10,38 +10,10 @@
   <!-- CANONICAL -->
   <link rel="canonical" href="https://smartcalcs.github.io/sip-calculator.html">
 
-  <!-- VIEWPORT -->
+  <!-- FAVICON (ADDED) -->
+  <link rel="icon" href="/favicon.png" type="image/png">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- FAVICON -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-
-  <!-- ORGANIZATION SCHEMA -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "SmartCalcs",
-    "url": "https://smartcalcs.github.io/",
-    "logo": "https://smartcalcs.github.io/assets/logo.png"
-  }
-  </script>
-
-  <!-- SOFTWARE APPLICATION SCHEMA -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "SIP Calculator",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "All",
-    "url": "https://smartcalcs.github.io/sip-calculator.html",
-    "publisher": {
-      "@type": "Organization",
-      "name": "SmartCalcs"
-    }
-  }
-  </script>
 
   <style>
     body {
@@ -66,20 +38,11 @@
       align-items: center;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .site-header a {
       text-decoration: none;
       color: #0b5ed7;
       font-weight: bold;
       font-size: 16px;
-    }
-
-    .brand img {
-      height: 28px;
-      width: auto;
-      display: block;
     }
 
     .page {
@@ -196,14 +159,48 @@
       margin: 0 8px;
     }
   </style>
+
+  <!-- WEBSITE SCHEMA (ADDED) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SmartCalcs",
+    "url": "https://smartcalcs.github.io/"
+  }
+  </script>
+
+  <!-- BREADCRUMB SCHEMA (ADDED) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://smartcalcs.github.io/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "SIP Calculator",
+        "item": "https://smartcalcs.github.io/sip-calculator.html"
+      }
+    ]
+  }
+  </script>
+
 </head>
 
 <body>
 
 <div class="site-header">
   <div class="inner">
-    <a href="index.html" class="brand">
-      <img src="/assets/logo.png" alt="SmartCalcs Logo">
+    <!-- LOGO ADDED (TEXT NOT REMOVED) -->
+    <a href="index.html" style="display:flex; align-items:center; gap:8px;">
+      <img src="/logo.png" alt="SmartCalcs Logo" width="28" height="28">
       SmartCalcs
     </a>
     <a href="index.html">Home</a>
@@ -251,7 +248,18 @@
   </p>
 
   <h2>SIP Formula</h2>
-  <p><strong>M = P × ((1 + r)<sup>n</sup> − 1) / r × (1 + r)</strong></p>
+  <p>
+    The SIP maturity amount is calculated using the formula:
+  </p>
+  <p>
+    <strong>M = P × ((1 + r)<sup>n</sup> − 1) / r × (1 + r)</strong>
+  </p>
+  <p>
+    Where:<br>
+    P = Monthly investment amount<br>
+    r = Monthly rate of return (annual rate ÷ 12 ÷ 100)<br>
+    n = Total number of months
+  </p>
 
   <h2>Example</h2>
   <p>
