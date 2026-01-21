@@ -10,10 +10,11 @@
   <!-- CANONICAL -->
   <link rel="canonical" href="https://smartcalcs.github.io/sip-calculator.html">
 
-  <!-- FAVICON -->
-  <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
-
+  <!-- VIEWPORT -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 
   <!-- ORGANIZATION SCHEMA -->
   <script type="application/ld+json">
@@ -33,12 +34,11 @@
     "@type": "SoftwareApplication",
     "name": "SIP Calculator",
     "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Web",
+    "operatingSystem": "All",
     "url": "https://smartcalcs.github.io/sip-calculator.html",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "INR"
+    "publisher": {
+      "@type": "Organization",
+      "name": "SmartCalcs"
     }
   }
   </script>
@@ -69,7 +69,7 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       text-decoration: none;
       color: #0b5ed7;
       font-weight: bold;
@@ -77,8 +77,9 @@
     }
 
     .brand img {
-      width: 32px;
-      height: 32px;
+      height: 28px;
+      width: auto;
+      display: block;
     }
 
     .page {
@@ -100,6 +101,16 @@
     p {
       font-size: 15px;
       line-height: 1.6;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb a {
+      color: #0b5ed7;
+      text-decoration: none;
     }
 
     .calc-box {
@@ -160,12 +171,29 @@
       color: #666;
     }
 
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+    }
+
     footer {
       margin-top: 50px;
       padding-top: 15px;
       border-top: 1px solid #ddd;
       font-size: 13px;
       text-align: center;
+    }
+
+    footer a {
+      color: #0b5ed7;
+      text-decoration: none;
+      margin: 0 8px;
     }
   </style>
 </head>
@@ -175,7 +203,7 @@
 <div class="site-header">
   <div class="inner">
     <a href="index.html" class="brand">
-      <img src="assets/logo.png" alt="SmartCalcs logo">
+      <img src="/assets/logo.png" alt="SmartCalcs Logo">
       SmartCalcs
     </a>
     <a href="index.html">Home</a>
@@ -183,6 +211,10 @@
 </div>
 
 <div class="page">
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> › SIP Calculator
+  </div>
 
   <h1>SIP Calculator</h1>
 
@@ -212,10 +244,37 @@
 
   <div class="ad-slot">Advertisement</div>
 
+  <h2>How SIP returns are calculated</h2>
+  <p>
+    SIP returns are calculated using compound interest applied monthly. Each monthly
+    investment compounds for a different duration, resulting in long-term wealth creation.
+  </p>
+
+  <h2>SIP Formula</h2>
+  <p><strong>M = P × ((1 + r)<sup>n</sup> − 1) / r × (1 + r)</strong></p>
+
+  <h2>Example</h2>
+  <p>
+    Investing ₹5,000 per month for 10 years at an annual return of 12%
+    demonstrates how disciplined investing can build wealth over time.
+  </p>
+
+  <h2>Related Calculators</h2>
+  <ul>
+    <li><a href="lumpsum-calculator.html">Lumpsum Calculator</a></li>
+    <li><a href="emi-calculator.html">EMI Calculator</a></li>
+    <li><a href="percentage-calculator.html">Percentage Calculator</a></li>
+  </ul>
+
+  <p class="note">
+    <strong>Note:</strong> Results are estimates only. Actual market returns may vary.
+  </p>
+
 </div>
 
 <footer>
-  © SmartCalcs
+  <a href="index.html">Home</a> |
+  <span>© SmartCalcs</span>
 </footer>
 
 <script>
