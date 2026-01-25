@@ -174,14 +174,13 @@
     <div class="result" id="result" aria-live="polite"></div>
     <div class="result" id="invested" aria-live="polite"></div>
 
-    <!-- AFFILIATE BLOCK (stays inside calc area - converts after results) -->
+    <!-- AFFILIATE BLOCK (keeps only Groww + lead generation) -->
     <div class="affiliate-box" aria-label="Recommended platforms">
-      <strong>Start investing — trusted platforms</strong>
+      <strong>Start investing — trusted platform</strong>
       <p style="margin:6px 0 0 0;">Prefer platforms with low fees and easy KYC. Choose one to open an account:</p>
 
       <div class="affiliate-cta-row">
         <button class="cta-button" onclick="trackAffiliateClick('Groww','https://your-affiliate-link-for-groww')">Open Groww</button>
-        <button class="cta-button" onclick="trackAffiliateClick('Zerodha','https://your-affiliate-link-for-zerodha')">Open Zerodha</button>
       </div>
 
       <div class="cmp-table" role="table" aria-label="Platform comparison">
@@ -194,12 +193,6 @@
               <td>Free</td>
               <td><a class="affiliate-link" href="https://your-affiliate-link-for-groww" rel="sponsored" target="_blank" onclick="trackAffiliateClick('Groww','https://your-affiliate-link-for-groww')">Open account</a></td>
             </tr>
-            <tr>
-              <td>Zerodha</td>
-              <td>₹100</td>
-              <td>Broker charges</td>
-              <td><a class="affiliate-link" href="https://your-affiliate-link-for-zerodha" rel="sponsored" target="_blank" onclick="trackAffiliateClick('Zerodha','https://your-affiliate-link-for-zerodha')">Open account</a></td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -208,7 +201,7 @@
         Affiliate disclosure: some links are affiliate links — we may earn a commission at no extra cost to you.
       </p>
 
-      <!-- LEAD FORM (optional, Formspree example) -->
+      <!-- LEAD FORM (Formspree example) -->
       <div class="lead-form">
         <h4 style="margin:10px 0 8px 0;">Get this result in your inbox</h4>
         <form action="https://formspree.io/f/<your-form-id>" method="POST" onsubmit="try{gtag('event','lead_submit',{event_category:'lead'});}catch(e){}">
@@ -259,8 +252,8 @@
   </section>
   <!-- END EXPLANATION -->
 
-  <!-- Last updated trust signal -->
-  <p class="note"><strong>Last updated:</strong> January 2026</p>
+  <!-- Last updated trust signal (auto-filled by JS) -->
+  <p class="note"><strong>Last updated:</strong> <span id="last-updated"></span></p>
 
   <h2>Related Calculators</h2>
   <ul>
@@ -278,7 +271,7 @@
   <a href="/disclaimer.html">Disclaimer</a> |
   <a href="/terms.html">Terms</a> |
   <a href="/contact.html">Contact</a><br>
-  © SmartCalcs
+  © <span id="copyright-year"></span> SmartCalcs
 </footer>
 
 <script>
@@ -350,6 +343,18 @@ document.addEventListener('click', function(e){
 }, true);
 </script>
 
+<!-- AUTO last-updated (Month Year) and copyright year -->
+<script>
+(function(){
+  const now = new Date();
+  const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const monthYear = monthNames[now.getMonth()] + " " + now.getFullYear();
+  const lastEl = document.getElementById('last-updated');
+  if(lastEl) lastEl.textContent = monthYear;
+  const cy = document.getElementById('copyright-year');
+  if(cy) cy.textContent = now.getFullYear();
+})();
+</script>
+
 </body>
 </html>
-```0
