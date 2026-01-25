@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 
   <!-- UNIQUE PER PAGE -->
-  <title>SIP Calculator – Monthly Investment Growth | SmartCalcs</title>
+  <title>SIP Calculator – Monthly Investment Returns | SmartCalcs</title>
   <meta name="description" content="Free SIP Calculator to estimate monthly investment returns, total wealth created, and growth over time. Accurate, simple, and easy to use.">
 
   <!-- CANONICAL -->
@@ -106,6 +106,31 @@
   }
   </script>
 
+  <!-- FAQPage schema (matches FAQ section on the page) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Is SIP better than lump sum investment?",
+        "acceptedAnswer":{"@type":"Answer","text":"SIP helps average market entry and reduce timing risk; lump sum can outperform if markets rise steadily. The right choice depends on capital availability and risk tolerance."}
+      },
+      {
+        "@type":"Question",
+        "name":"Can I stop a SIP anytime?",
+        "acceptedAnswer":{"@type":"Answer","text":"Yes. Most platforms allow pausing or stopping SIPs without penalties, subject to exit loads and tax rules."}
+      },
+      {
+        "@type":"Question",
+        "name":"Are SIP returns guaranteed?",
+        "acceptedAnswer":{"@type":"Answer","text":"No. SIP returns depend on market performance. This calculator provides estimates based on the return you enter; actual outcomes will vary."}
+      }
+    ]
+  }
+  </script>
+
 </head>
 
 <body>
@@ -126,57 +151,30 @@
     <a href="index.html">Home</a> › SIP Calculator
   </div>
 
-  <h1>SIP Calculator</h1>
+  <h1>SIP Calculator – Monthly Investment Returns</h1>
 
-  <!-- EXPANDED evergreen content (≈500 words total) -->
-  <section class="explanation">
-    <p>
-      This SIP calculator estimates the future value of your monthly investments by applying monthly compounding to each installment. It is designed for practical planning — retirement targets, education funds, or any long-term goal where regular contributions matter. Enter your monthly contribution, expected annual return, and duration to see an estimated maturity amount and the total invested sum.
-    </p>
+  <!-- Intent bridge (short, under H1, before calculator) -->
+  <p style="font-size:14px;color:#555;">
+    Calculate how your monthly SIP investment can grow over time. Enter the amount, expected return, and duration to see estimated wealth creation.
+  </p>
 
-    <h3>When to use this calculator</h3>
-    <p>
-      Use this calculator when you want to convert a monthly savings target into a long-term corpus, or when you want to compare different monthly amounts and tenures quickly. It’s particularly helpful if you are choosing between starting a SIP versus a lump-sum investment, or when deciding how much to increase monthly savings to reach a target by a certain year.
-    </p>
-
-    <h3>How it works (plain explanation)</h3>
-    <p>
-      The calculator converts the entered annual return into a monthly rate (annual ÷ 12 ÷ 100) and compounds each monthly contribution at that monthly rate for the remaining months until maturity. Earlier contributions compound for longer, so duration has a large effect on the final amount. The computation uses the standard SIP maturity approach applied iteratively month-by-month for accuracy.
-    </p>
-
-    <h3>Benefits of SIP investing</h3>
-    <p>
-      SIPs enforce disciplined investing — you invest regularly regardless of market conditions, which helps average your purchase price over time (rupee-cost averaging). SIPs also harness compound interest: small monthly amounts, invested consistently over many years, can grow substantially. They are flexible (you can change amounts and stop/start), low-effort, and suitable for long-term goals.
-    </p>
-
-    <h3>Factors that affect SIP returns</h3>
-    <p>
-      Key factors include the monthly amount, investment duration, and the actual returns achieved by the underlying funds. Market volatility means returns vary year-to-year; higher average returns and longer durations boost the final corpus. Fund selection, expense ratios, and taxes also impact net returns. Use conservative estimates when planning to avoid unrealistic expectations.
-    </p>
-
-    <h3>Frequently asked questions</h3>
-    <p><strong>Is SIP better than lump sum?</strong> It depends — SIPs help if you want to average into the market and avoid timing risk; lump sum can outperform if markets rise steadily and you have capital available.</p>
-    <p><strong>Can I stop SIP anytime?</strong> Yes — most platforms allow you to pause or stop SIPs without penalties; check fund exit loads and tax implications.</p>
-    <p><strong>Are returns guaranteed?</strong> No — mutual funds are market-linked. This calculator provides estimates based on the return you enter; actual outcomes vary.</p>
-  </section>
-  <!-- END expanded content -->
-
+  <!-- CALCULATOR FIRST (moved above the explanation) -->
   <div class="calc-box">
     <label for="monthly">Monthly Investment (₹)</label>
-    <input type="number" id="monthly" placeholder="e.g. 5000">
+    <input type="number" id="monthly" aria-label="Monthly SIP amount" placeholder="e.g. 5000">
 
     <label for="rate">Expected Annual Return (%)</label>
-    <input type="number" id="rate" placeholder="e.g. 12">
+    <input type="number" id="rate" aria-label="Expected annual return percentage" placeholder="e.g. 12">
 
     <label for="years">Investment Duration (Years)</label>
-    <input type="number" id="years" placeholder="e.g. 10">
+    <input type="number" id="years" aria-label="Investment duration in years" placeholder="e.g. 10">
 
     <button onclick="calculate()">Calculate</button>
 
-    <div class="result" id="result"></div>
-    <div class="result" id="invested"></div>
+    <div class="result" id="result" aria-live="polite"></div>
+    <div class="result" id="invested" aria-live="polite"></div>
 
-    <!-- AFFILIATE BLOCK -->
+    <!-- AFFILIATE BLOCK (stays inside calc area - converts after results) -->
     <div class="affiliate-box" aria-label="Recommended platforms">
       <strong>Start investing — trusted platforms</strong>
       <p style="margin:6px 0 0 0;">Prefer platforms with low fees and easy KYC. Choose one to open an account:</p>
@@ -221,10 +219,48 @@
     </div>
     <!-- END AFFILIATE BLOCK -->
 
-    <canvas id="growthChart"></canvas>
+    <canvas id="growthChart" role="img" aria-label="Investment growth chart"></canvas>
   </div>
+  <!-- END CALC BOX -->
 
+  <!-- AD SLOT (kept, paste AdSense after approval) -->
   <div class="ad-slot">Advertisement</div>
+
+  <!-- EXPLANATION CONTENT (moved below calculator) -->
+  <section class="explanation">
+    <p>
+      This SIP calculator estimates the future value of your monthly investments by applying monthly compounding to each installment. It is designed for practical planning — retirement targets, education funds, or any long-term goal where regular contributions matter. Enter your monthly contribution, expected annual return, and duration to see an estimated maturity amount and the total invested sum.
+    </p>
+
+    <h3>When to use this calculator</h3>
+    <p>
+      Use this calculator when you want to convert a monthly savings target into a long-term corpus, or when you want to compare different monthly amounts and tenures quickly. It’s particularly helpful if you are choosing between starting a SIP versus a lump-sum investment, or when deciding how much to increase monthly savings to reach a target by a certain year.
+    </p>
+
+    <h3>How it works (plain explanation)</h3>
+    <p>
+      The calculator converts the entered annual return into a monthly rate (annual ÷ 12 ÷ 100) and compounds each monthly contribution at that monthly rate for the remaining months until maturity. Earlier contributions compound for longer, so duration has a large effect on the final amount. The computation uses the standard SIP maturity approach applied iteratively month-by-month for accuracy.
+    </p>
+
+    <h3>Benefits of SIP investing</h3>
+    <p>
+      SIPs enforce disciplined investing — you invest regularly regardless of market conditions, which helps average your purchase price over time (rupee-cost averaging). SIPs also harness compound interest: small monthly amounts, invested consistently over many years, can grow substantially. They are flexible (you can change amounts and stop/start), low-effort, and suitable for long-term goals.
+    </p>
+
+    <h3>Factors that affect SIP returns</h3>
+    <p>
+      Key factors include the monthly amount, investment duration, and the actual returns achieved by the underlying funds. Market volatility means returns vary year-to-year; higher average returns and longer durations boost the final corpus. Fund selection, expense ratios, and taxes also impact net returns. Use conservative estimates when planning to avoid unrealistic expectations.
+    </p>
+
+    <h3>Frequently asked questions</h3>
+    <p><strong>Is SIP better than lump sum?</strong> It depends — SIPs help if you want to average into the market and avoid timing risk; lump sum can outperform if markets rise steadily and you have capital available.</p>
+    <p><strong>Can I stop SIP anytime?</strong> Yes — most platforms allow you to pause or stop SIPs without penalties; check fund exit loads and tax implications.</p>
+    <p><strong>Are returns guaranteed?</strong> No — mutual funds are market-linked. This calculator provides estimates based on the return you enter; actual outcomes vary.</p>
+  </section>
+  <!-- END EXPLANATION -->
+
+  <!-- Last updated trust signal -->
+  <p class="note"><strong>Last updated:</strong> January 2026</p>
 
   <h2>Related Calculators</h2>
   <ul>
@@ -285,7 +321,9 @@ function drawChart(data) {
 
   const max = Math.max(...data);
   const padding = 30;
-  const stepX = (canvas.width - padding * 2) / (data.length - 1);
+  const stepX = data.length > 1
+    ? (canvas.width - padding * 2) / (data.length - 1)
+    : 0;
 
   ctx.beginPath();
   ctx.strokeStyle = "#0b5ed7";
@@ -314,3 +352,4 @@ document.addEventListener('click', function(e){
 
 </body>
 </html>
+```0
